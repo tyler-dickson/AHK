@@ -1,0 +1,106 @@
+
+Client Code - txtClientCode
+Contact - txtContactName
+Job Title - txtTitleJob
+Company - txtCompany
+Address - txtAddress
+Billing Address - txtAddressBilling
+Mailing Address - txtAddressMailing
+City - txtCity
+State - txtState
+ZIP - txtZip
+Business Phone - txtBusinessPhone
+Fax - txtFax
+Email - txtEmail
+State of Incorporation - txtStateofInc
+Country - txtCountry
+Web Page - txtWebPageDecription
+Other Phone - txtOtherPhone
+Mobile Phone - txtMobilePhone
+Other Contacts - txtOtherContacts
+Notes - txtNotes
+Reference Number - txtRefNum
+Billing Attorney - txtAttyBilling
+Assigned Attorney - txtAttyAssigned
+Working Attorney - txtAttyWorking
+Patent Contact - txtContactPA
+Patent Address - txtAddressPA
+Responsible Patent Attorney - txtRespAttyPA
+Working Patent Attorney - txtWrkAttyPA
+Trademark Contact - txtContactTM
+Trademark Address - txtAddressTM
+Trademark Responsible Attorney - txtRespAttyTM
+Trademark Working Attorney - txtWrkAttyTM
+Litigation Contact - txtContactLit
+Litigation Address - txtAddressLit
+Responsible Litigation Attorney - txtRespAttyLit
+Working Litigation Attorney - txtWrkAttyLit
+
+
+
+
+
+
+Foreign Associate - chkForeignAssoc (checkbox)
+INTA - chkINTA (checkbox)
+Holiday - chkHoliday (checkbox)
+INT Seminar - chkINTSeminar (checkbox)
+KMOB Seminar - chkCASeminar (checkbox)
+Inactive - chkInactive (checkbox)
+Inactive Description - txtInactiveReason
+Flag = chkFlag (checkbox)
+Flag Description - txtFlagDescription
+Engagement Agreement - chkEngAgree (checkbox)
+Annuities - txtAnnuities
+
+
+
+
+
+GuiControl, 1: , Button1, %ClientCode%
+GuiControl, 1: , Button2, %ContactName%
+GuiControl, 1: , Button3, %JobTitle%
+GuiControl, 1: , Button4, %Company%
+GuiControl, 1: , Button5, %Address%
+GuiControl, 1: , Button6, %BillingAddress%
+GuiControl, 1: , Button7, %MailingAddress%
+GuiControl, 1: , Button8, %CityStateZip%
+GuiControl, 1: , Button9, %Phone%
+GuiControl, 1: , Button10, %Fax%
+GuiControl, 1: , Button11, %Email%
+GuiControl, 1: , Button12, %StateOfIncorp%
+GuiControl, 1: , Button13, %Country%
+
+GuiControl, 1: , Button14, %Webpage%
+GuiControl, 1: , Button15, %OtherPhone%
+GuiControl, 1: , Button16, %MobilePhone%
+GuiControl, 1: , Button17, %OtherContact%
+GuiControl, 1: , Button18, %Notes%
+GuiControl, 1: , Button19, %ReferenceNumber%
+GuiControl, 1: , Button20, %BillingAtty%
+GuiControl, 1: , Button21, %AssignedAtty%
+GuiControl, 1: , Button22, %WorkingAtty%
+GuiControl, 1: , Button23, 
+GuiControl, 1: , Button24, 
+GuiControl, 1: , Button25, 
+GuiControl, 1: , Button26, 
+
+GuiControl, 1: , Button27, %PatentContact%
+GuiControl, 1: , Button28, %PatentAddress%
+GuiControl, 1: , Button29, %ResponsiblePatentAttorney%
+GuiControl, 1: , Button30, %WorkingPatentAttorney%
+GuiControl, 1: , Button31, 
+GuiControl, 1: , Button32, %TrademarkContact%
+GuiControl, 1: , Button33, %TrademarkResponsibleAttorney%
+GuiControl, 1: , Button34, %TrademarkWorkingAttorney%
+GuiControl, 1: , Button35, 
+GuiControl, 1: , Button36, %LitigationContact%
+GuiControl, 1: , Button37, %LitigationAddress%
+GuiControl, 1: , Button38, %ResponsibleLitigationAttorney%
+GuiControl, 1: , Button39, %WorkingLitigationAttorney%
+
+
+
+
+
+
