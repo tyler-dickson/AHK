@@ -6,1046 +6,291 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 Enabled := ComObjError(false)
 Menu, Tray, Icon, mmcndmgr.dll , 119
 
-/*
-												Client Code - txtClientCode
-Billing Attorney - txtAttyBilling
-Assigned Attorney - txtAttyAssigned
-Working Attorney - txtAttyWorking
-Contact - txtContactName
-Job Title - txtTitleJob
-Company - txtCompany
-Address - txtAddress
-Billing Address - txtAddressBilling
-Mailing Address - txtAddressMailing
-City - txtCity
-State - txtState
-State of Incorporation - txtStateofInc
-Country - txtCountry
-ZIP - txtZip
-Business Phone - txtBusinessPhone
-Fax - txtFax
-Email - txtEmail
-Web Page - txtWebPageDecription
-Other Phone - txtOtherPhone
-Mobile Phone - txtMobilePhone
-Foreign Associate - chkForeignAssoc (checkbox)
-INTA - chkINTA (checkbox)
-Holiday - chkHoliday (checkbox)
-INT Seminar - chkINTSeminar (checkbox)
-KMOB Seminar - chkCASeminar (checkbox)
-Other Contacts - txtOtherContacts
-Notes - txtNotes
-Reference Number - txtRefNum
-Patent Contact - txtContactPA
-Patent Address - txtAddressPA
-Responsible Patent Attorney - txtRespAttyPA
-Working Patent Attorney - txtWrkAttyPA
-Trademark Contact - txtContactTM
-Trademark Address - txtAddressTM
-Trademark Responsible Attorney - txtRespAttyTM
-Trademark Working Attorney - txtWrkAttyTM
-Litigation Contact - txtContactLit
-Litigation Address - txtAddressLit
-Responsible Litigation Attorney - txtRespAttyLit
-Working Litigation Attorney - txtWrkAttyLit
-Inactive - chkInactive (checkbox)
-Inactive Description - txtInactiveReason
-Flag = chkFlag (checkbox)
-Flag Description - txtFlagDescription
-Engagement Agreement - chkEngAgree (checkbox)
-Annuities - txtAnnuities
-*/
-
-width = 385
-height = 50
-
-Pos1 = 30
-Pos2 = 80
-Pos3 = 130
-Pos4 = 180
-Pos5 = 230
-Pos6 = 280
-Pos7 = 330
-Pos8 = 380
-Pos9  = 430
-Pos10 = 480
-Pos11 = 530
-Pos12 = 580
-Pos13 = 630
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Gui, 1: New, Resize, CID Thingamabob
-Gui, 2: New, Resize, Client Search
-
-Gui, 1: Add, Tab3, x0 y0 w490 h800, 1|2|3|4
-Gui, 1: Tab, 1
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text, 	 x0 y%Pos1% w100 Center, Client Code
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton1, %ClientCode%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos2% w100 Center, Contact Name
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton2, %ContactName%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos3% w100 Center, Job Title
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton3, %JobTitle%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos4% w100 Center, Company
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton4, %Company%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos5% w100 Center, Address
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton5, %Address%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos6% w100 Center, Billing Address
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton6, %BillingAddress%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos7% w100 Center, Mailing Address
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton7, %MailingAddress%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos8% w100 Center, City/State/ZIP
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton8, %CityStateZip%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos9% w100 Center, Phone Number
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton9, %Phone%
-
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos10% w100 Center, Fax Number
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton10, %Fax%
-
-Gui, 1: Font, bold underline ;Button 11
-Gui, 1: Add, Text,   x0 y%Pos11% w100 Center, Email Address
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton11, %Email%
-
-;Button12
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos12% w100 Center, State Of`nIncorporation
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton12, %StateOfIncorp%
-
-;Button13
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos13% w100 Center, Country
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton13, %Country%
-
-Gui, 1: Tab, 2
-;Button14
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos1% w100 Center, Webpage
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton14, %Webpage%
-
-;Button15
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos2% w100 Center, Other Phone
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton15, %OtherPhone%
-
-;Button16
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos3% w100 Center, Mobile Phone
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton16, %MobilePhone%
-
-;Button17
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos4% w100 Center, Other Contact
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton17, %OtherContact%
-
-;Button18
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos5% w100 Center, Notes
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton18, %Notes%
-
-;Button19
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos6% w100 Center, Reference No.
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton19, %ReferenceNumber%
-
-;Button20
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos7% w100 Center, Billing Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton20, %BillingAtty%
-
-;Button21
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos8% w100 Center, Assigned Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton21, %AssignedAtty%
-
-;Button22
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos9% w100 Center, Working Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton22, %WorkingAtty%
-
-;Button23
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos10% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton23, %ReferenceNumber%
-
-;Button24
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos11% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton24, %ReferenceNumber%
-
-;Button25
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos12% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton25, %ReferenceNumber%
-
-;Button26
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos13% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton26, %ReferenceNumber%
-
-Gui, 1: Tab, 3
-;Button14
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos1% w100 Center, Patent Contact
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton27, %PatentContact%
-
-;Button15
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos2% w100 Center, Patent Address
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton28, %PatentAddress%
-
-;Button16
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos3% w100 Center, Responsible Patent Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton29, %ResponsiblePatentAttorney%
-
-;Button17
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos4% w100 Center, Working Patent Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton30, %WorkingPatentAttorney%
-
-;Button18
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos5% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton31, %ReferenceNumber%
-
-;Button19
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos6% w100 Center, Trademark Contact
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton32, %TrademarkContact%
-
-;Button20
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos7% w100 Center, Trademark Responsible Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton33, %TrademarkResponsibleAttorney%
-
-;Button21
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos8% w100 Center, Trademark Working Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton34, %TrademarkWorkingAttorney%
-
-;Button22
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos9% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton35, %ReferenceNumber%
-
-;Button23
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos10% w100 Center, Litigation Contact
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton36, %LitigationContact%
-
-;Button24
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos11% w100 Center, Litigation Address
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton37, %LitigationAddress%
-
-;Button25
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos12% w100 Center, Responsible Litigation Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton38, %ResponsibleLitigationAttorney%
-
-;Button26
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos13% w100 Center, Working Litigation Attorney
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton39, %WorkingLitigationAttorney%
-
-Gui, 1: Tab, 4
-;Button14
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos1% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton40, %ReferenceNumber%
-
-;Button15
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos2% w100 Center,TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton41, %ReferenceNumber%
-
-;Button16
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos3% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton42, %ReferenceNumber%
-
-;Button17
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos4% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton43, %ReferenceNumber%
-
-;Button18
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos5% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton44, %ReferenceNumber%
-
-;Button19
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos6% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton45, %ReferenceNumber%
-
-;Button20
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos7% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton46, %ReferenceNumber%
-
-;Button21
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos8% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton47, %ReferenceNumber%
-
-;Button22
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos9% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton48, %ReferenceNumber%
-
-;Button23
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos10% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton49, %ReferenceNumber%
-
-;Button24
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos11% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton50, %ReferenceNumber%
-
-;Button25
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos12% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton51, %ReferenceNumber%
-
-;Button26
-Gui, 1: Font, bold underline
-Gui, 1: Add, Text,   x0 y%Pos13% w100 Center, TBD
-Gui, 1: Font, 
-Gui, 1: Add, Button, x100 yp-5 w%width% h%height% gButton52, %ReferenceNumber%
-
-
-Gui, 1: Tab
-Gui, 1: Add, Edit,   x490 y0 w320 h208 vBusinessCardExport,
-Gui, 1: Add, Button, x490 y212 w80 gClearInfo, Clear
-Gui, 1: Add, Button, x600 y212 w150 gExport, Export to Business Card
-Gui, 1: Add, Button, x760 y212 w10 gExpand, >>
-Gui, 1: Add, ActiveX, x492 y290 w1000 h385 vie, Shell.Explorer  ; The final parameter is the name of the ActiveX component.
-Gui, 2: Add, ActiveX, x0 y-130 w700 h780 vSearch, Shell.Explorer  ; The final parameter is the name of the ActiveX component.
-ie.Navigate("http://kmobnetold/outsidekmobnet/cid/cidold/ClientList.aspx")  ; This is specific to the web browser control.
-Search.Navigate("http://kmobnet/insidekmobnet/ClientID_Search/ClientID.cfm?Client=Qualcomm&submit=Search")  ; This is specific to the web browser control.
-ie.silent := true
-Search.silent := true 
-Gui, Font, underline
-Gui, 1: Add, Text, x507 y262 , SAVED CLIENTS:
-Gui, Font, 
-Gui, 1: Add, ComboBox, x600 y258 w117 Sort gSavedURL vSavedURL, HANBEV|QVID|TEST|TEST2|TEST3
-Gui, 1: Add, Button, x724 y258 w10 gGotoURL, Save
-
-
-
-
-Gui, 1: Show, w820 h680
-;Gui, 2: Show
+global ReadyToPaste = 0
+
+Gui, 1: New, , CID Thingamabob
+Gui, 1: Add, Text, 	 x5 y5 w180 Center v1 gStatic, Client
+Gui, 1: Add, Button, x5 y20 w180 gButton, %ClientCode%
+Gui, 1: Add, Text,   x5 y55 w180 Center v2 gStatic, Contact Name
+Gui, 1: Add, Button, x5 y70 w180 gButton, %ContactName%
+Gui, 1: Add, Text,   x5 y105 w180 Center v3 gStatic, Job Title
+Gui, 1: Add, Button, x5 y120 w180 gButton, %JobTitle%
+Gui, 1: Add, Text,   x5 y155 w180 Center v4 gStatic, Company
+Gui, 1: Add, Button, x5 y170 w180 gButton, %Company%
+Gui, 1: Add, Text,   x5 y205 w180 Center v5 gStatic, Address
+Gui, 1: Add, Button, x5 y220 w180 h60 gButton, %Address%
+Gui, 1: Add, Text,   x5 y290 w180 Center v6 gStatic, Billing Address
+Gui, 1: Add, Button, x5 y305 w180 h60 gButton, %BillingAddress%
+Gui, 1: Add, Text,   x5 y375 w180 Center v7 gStatic, Mailing Address
+Gui, 1: Add, Button, x5 y390 w180 h60 gButton, %MailingAddress%
+Gui, 1: Add, Text,   x5 y455 w180 Center v8 gStatic, City/State/ZIP
+Gui, 1: Add, Button, x5 y470 w180 gButton, %CityStateZip%
+Gui, 1: Add, Text,   x5 y505 w180 Center v9 gStatic, Phone Number
+Gui, 1: Add, Button, x5 y520 w180 gButton, %Phone%
+Gui, 1: Add, Text,   x5 y555 w180 Center v10 gStatic, Fax Number
+Gui, 1: Add, Button, x5 y570 w180 gButton, %Fax%
+Gui, 1: Add, Text,   x5 y605 w180 Center v11 gStatic, Email Address
+Gui, 1: Add, Button, x5 y620 w180 gButton, %Email%
+
+;Gui, 1: Add, Edit,   x190 y22 w300 h208 vBusinessCardExport,
+;Gui, 1: Add, Button, x295 y5 w80 gOpenCID, Open CID
+;Gui, 1: Add, Button, x300 y232 w150 gExport, Export to Business Card
+Gui, 1: Add, Button, x193 y620 w80 gClearInfo, Restart
+Gui, 1: Add, Button, x695 y640 w10 gExpand, >>					;Button13
+
+Gui, 1: Add, ActiveX, x10 y665 w1000 h385 vie2, Shell.Explorer  ; The final parameter is the name of the ActiveX component.
+ie2.Navigate("http://kmobnetold/outsidekmobnet/cid/cidold/ClientList.aspx")  ; This is specific to the web browser control.
+;Gui, 1: Add, Text, x218 y261 , Saved Clients:
+;Gui, 1: Add, ComboBox, x300 y258 w117 Sort gSavedURL vSavedURL, HANBEV|QVID|TEST|TEST2|TEST3
+;Gui, 1: Add, Button, x424 y258 w10 gGotoURL, Go
+
+Gui, 1: Add, Text, x200 y25 w275 h15, 1
+Gui, 1: Add, Edit, xp+25 yp+15 w250 h20, `n
+Loop 14 {
+;Position := A_Index * 25
+Gui, 1: Add, Text, xp-25 yp+25 w275 h15, % A_Index + 1
+Gui, 1: Add, Edit, xp+25 yp+15 w250 h20, `n
+
+}
+Gui, 1: Add, Button, x248 y0 w80 gGrabLCFields, Grab LC Fields	;Button14
+Gui, 1: Add, Button, x372 y0 w80 gSetLCFields, Set LC Fields	;Button15
+
+Gui, 1: Add, Text, 	 x515 y5 w200 Center, Client Code
+Gui, 1: Add, Button, x515 yp+15 w200 gButton, %ClientCode% 		;Button16
+
+Gui, 1: Add, Text, 	 x515 yp+30 w200 Center, Assignee
+Gui, 1: Add, Button, x515 yp+15 w200 gButton, 		;Button16
+
+Gui, 1: Add, Text, 	 x515 yp+30 w200 Center, Applicant
+Gui, 1: Add, Button, x515 yp+15 w200 gButton, 		;Button16
+
+
+Gui, 1: Add, Text,   x515 	yp+30 w120 Center, Priority #
+Gui, 1: Add, Text,   xp+120 yp w80 Center, Priority Date
+Gui, 1: Add, Button, x515 	yp+15 w120 gButton, 
+Gui, 1: Add, Button, xp+120 yp w80 gButton, 
+
+Gui, 1: Add, Text,   x515 	yp+30 w120 Center, Application #
+Gui, 1: Add, Text,   xp+120 yp w80 Center, Filing Date
+Gui, 1: Add, Button, x515 	yp+15 w120 gButton, 
+Gui, 1: Add, Button, xp+120 yp w80 gButton, 
+
+Gui, 1: Add, Text,   x515 	yp+30 w120 Center, Publication #
+Gui, 1: Add, Text,   xp+120 yp w80 Center, Publication Date
+Gui, 1: Add, Button, x515 	yp+15 w120 gButton, 
+Gui, 1: Add, Button, xp+120 yp w80 gButton, 
+
+Gui, 1: Add, Text,   x515 	yp+30 w120 Center, 2nd Publication #
+Gui, 1: Add, Text,   xp+120 yp w80 Center, 2nd Pub Date
+Gui, 1: Add, Button, x515 	yp+15 w120 gButton, 
+Gui, 1: Add, Button, xp+120 yp w80 gButton, 
+
+Gui, 1: Add, Text,   x515 	yp+30 w120 Center, Patent/Registration #
+Gui, 1: Add, Text,   xp+120 yp w80 Center, Issue/Reg Date
+Gui, 1: Add, Button, x515 	yp+15 w120 gButton, 
+Gui, 1: Add, Button, xp+120 yp w80 gButton, 
+
+Gui, 1: Add, Text,   x515 	yp+30 w120 Center, Parent/PCT #
+Gui, 1: Add, Text,   xp+120 yp w80 Center, Parent/PCT Date
+Gui, 1: Add, Button, x515 	yp+15 w120 gButton, 
+Gui, 1: Add, Button, xp+120 yp w80 gButton, 
+
+Gui, 1: Add, Text,   x515 	yp+30 w120 Center, Parent Patent #
+Gui, 1: Add, Text,   xp+120 yp w80 Center, Parent Issue Date
+Gui, 1: Add, Button, x515 	yp+15 w120 gButton, 
+Gui, 1: Add, Button, xp+120 yp w80 gButton, 
+
+Gui, 1: Add, Edit, x515 yp+30 w200 h180 vPlainText,
+
+
+OnMessage(0x200, "Help")
+Gui, 1: Show, w720 h850
+
 SetTimer, PersistBiblio, 1000
+SetTimer, GrabClientCode, 1000
+gosub ClearInfo
 return
 
-GotoURL:
-var := ie.LocationURL ;grab current url
-GuiControlGet, StatusButton1, , Button1
-MsgBox, % var " | " StatusButton1
+Help(wParam, lParam, Msg) {
+MouseGetPos,,,, OutputVarControl
+Loop 15 
+	{
+	NewOffset := A_Index + 11
+	IfEqual, OutputVarControl, Static%NewOffset%  ; 26
+		{
+		GuiControlGet, Help, , Static%NewOffset% 
+		StringLen, HelpLength, Help
+		if (HelpLength < 50) 
+			Help := ""
+		}
+	}
+ToolTip % Help
+}
+
+Static:
+GuiControlGet, Temp16,  , Edit16
+GuiControlGet, Clicked, , Button%A_GuiControl%
+	if (Temp16 == "")
+		GuiControl, , Edit16, %Clicked%
+	else
+		GuiControl, , Edit16, %Temp16%`n%Clicked%
+
 return
 
-SavedURL:
-Gui, Submit, NoHide
-;MsgBox, %SavedURL%
-if SavedURL = HANBEV
-	ie.Navigate("http://kmobnetold/outsidekmobnet/cid/cidold/EditContact.aspx?ItemID=28426")
-else
-	ie.Navigate("http://kmobnetold/outsidekmobnet/cid/cidold/EditContact.aspx?ItemID=28426")
+GrabLCFields:
+gosub ClearInfo
+BlankSpots := ""
+Loop  
+{
+Offset := A_Index + 11
+ControlGetText, TempStatic,  % "WindowsForms10.STATIC.app.0.1a6f050_r81_ad2" . A_Index, ahk_exe WINWORD.EXE
+ControlGetText, Temp,  % "WindowsForms10.EDIT.app.0.1a6f050_r81_ad2" . A_Index, ahk_exe WINWORD.EXE
+	
+if (TempStatic == "") 
+	{
+	break
+	}
+if (Temp == "")
+	{
+	GuiControl, 1: Show, Static%Offset%
+	GuiControl, 1: Show, Edit%A_Index%
+	GuiControl, 1: , Static%Offset%, %TempStatic%
+	GuiControl, 1: , Edit%A_Index%, %Temp%
+	BlankSpots++
+	}
+else 
+	{
+	GuiControl, 1: Show, Static%Offset%
+	GuiControl, 1: Show, Edit%A_Index%
+	GuiControl, 1: , Static%Offset%, %TempStatic%
+	GuiControl, 1: , Edit%A_Index%, %Temp%
+	BlankSpots++
+	}
+}
 return
 
-;http://kmobnet/insidekmobnet/ClientID_Search/ClientID.cfm?Client=Test&submit=Search
+
+SetLCFields:
+Loop %BlankSpots%
+	{
+	GuiControlGet, Temp, , Edit%A_Index%
+	ControlSetText, % "WindowsForms10.EDIT.app.0.1a6f050_r81_ad2" . A_Index, %Temp%, ahk_exe WINWORD.EXE
+	}
+return
 
 ClearInfo:
-GuiControl, 1: , Edit1,
-ie.Navigate("http://kmobnetold/outsidekmobnet/cid/cidold/ClientList.aspx")  ; This is specific to the web browser control.
+Loop 15 
+{
+Offset := A_Index + 11
+GuiControl, 1: , Edit%A_Index%,
+GuiControl, 1: Hide, Edit%A_Index%
+GuiControl, 1: , Static%Offset%, % A_Index
+GuiControl, 1: Hide, Static%Offset%
+}
+
+ie2.Navigate("http://kmobnetold/outsidekmobnet/cid/cidold/ClientList.aspx")  ; This is specific to the web browser control.
+BlankSpots := ""
 return
 
 Expand:
 toggle := !toggle
 	if toggle
 		{
-		Gui, Show, w1200
-		Gui, 2: Show
-		GuiControl, , Button14, <<
+		Gui, Show, w1000
+		GuiControl, , Button13, <<
 		}
 	else
 		{
-		Gui, Show, w620
-		Gui, 2: Show
-		GuiControl, , Button14, >>
+		Gui, Show, w720
+		GuiControl, , Button13, >>
 		}
 return
 
-Export:
-Gui, Submit, NoHide
-;MsgBox, % BusinessCardExport
-StringSplit, BusinessCardExport, BusinessCardExport, `n, 
-;MsgBox % BusinessCardExport0 " | " BusinessCardExport1 " | " BusinessCardExport2 " | " BusinessCardExport3 " | " BusinessCardExport4
-olMailItem := 0
-o:= ComObjActive("Outlook.Application").Session()
-MailItem := ComObjActive("Outlook.Application").CreateItem(olMailItem)
-MailItem.Subject := "Test Business Card" ;change to whatever your subject is.
-MailItem.BodyFormat := olFormatHTML
-MailItem.HTMLBody := "<HTML><BODY><b>" BusinessCardExport1 "</b><br>" BusinessCardExport2 "<BR>" BusinessCardExport3 "<BR>" BusinessCardExport4  "<BR>" BusinessCardExport5   "<BR>" BusinessCardExport6 "<BR>" BusinessCardExport7 "<BR>" BusinessCardExport8 "<BR>" BusinessCardExport9 "<BR>" BusinessCardExport10 "<BR>" BusinessCardExport11 "</BODY></p></HTML>"
-MailItem.Display ;Make email visible
-;Clipboard := MailItem.HTMLBody
+Button:
+Loop 15 
+	{
+	GuiControlGet, Temp, , Edit%A_Index%
+		if (Temp == "")
+			{
+			GuiControl, , Edit%A_Index%, %A_GuiControl%
+			break
+			}
+	}
 return
 
-
-
-Button1:
-GuiControlGet, StatusButton1, , Button1
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton1
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton1
-GuiControl, 1: , Edit1, %BusinessCard%
+SelectedText := A_GuiControl
+ReadyToPaste = 1
+MsgBox, %SelectedText% %ReadyToPaste%
+;ControlSetText, % "WindowsForms10.EDIT.app.0.1a6f050_r81_ad2" . "1", % A_GuiControl, ahk_exe WINWORD.EXE
 return
 
-Button2:
-GuiControlGet, StatusButton2, , Button2
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton2
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton2
-GuiControl, 1: , Edit1, %BusinessCard%
-return
+GrabClientCode:
+ie := WBGet()
+;while ie.busy or ie.ReadyState != 4 ;Wait for page to load
+;	Sleep, 100
+URL := ie.LocationURL ;grab current url
+ClientCode := ie.document.getElementByID("fldstrCaseNumber_TextBox").Value
+ClientCodeTM := ie.document.getElementByID("fldstrCaseNumber").Value
+;Attorneys := ie.document.getElementByID("fldstrAttorneys").Value
 
-Button3:
-GuiControlGet, StatusButton3, , Button3
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton3
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton3
-GuiControl, 1: , Edit1, %BusinessCard%
-return
+	if ClientCode = 
+		Stored := ClientCodeTM
+	else if ClientCodeTM = 
+		Stored := ClientCode
+	if (ClientCode := "") && (ClientCodeTM := "")
+		Stored := ""
+	
+;TrayTip, Grabbed Client Code, %ClientCode% | %ClientCodeTM% | %url%
+GuiControl, 1: , Button16, %Stored%
+GuiControl, 1: , Button17, % ie.document.getElementByID("fldstrOwnerName").Value
+GuiControl, 1: , Button18, % ie.document.getElementByID("fldstrApplicant").Value
+GuiControl, 1: , Button19, % ie.document.getElementByID("fldstrPriNumber").Value
+GuiControl, 1: , Button20, % ie.document.getElementByID("flddtePriDate").Value
+GuiControl, 1: , Button21, % ie.document.getElementByID("fldstrAppNumber").Value
+GuiControl, 1: , Button22, % ie.document.getElementByID("flddteFilDate").Value
+GuiControl, 1: , Button23, % ie.document.getElementByID("fldstrPubNumber").Value
+GuiControl, 1: , Button24, % ie.document.getElementByID("flddtePubDate").Value
+GuiControl, 1: , Button25, % ie.document.getElementByID("fldstrPubNumber2").Value
+GuiControl, 1: , Button26, % ie.document.getElementByID("flddtePubDate_2").Value
 
-Button4:
-GuiControlGet, StatusButton4, , Button4
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton4
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton4
-GuiControl, 1: , Edit1, %BusinessCard%
-return
+PatNum := ie.document.getElementByID("fldstrPatNumber").Value
+RegNum := ie.document.getElementByID("fldstrRegNumber").Value
+if (PatNum != "")
+	GuiControl, 1: , Button27, %PatNum%
+else GuiControl, 1: , Button27, %RegNum%
+	
+IssDate := ie.document.getElementByID("flddteIssDate").Value
+RegDate := ie.document.getElementByID("flddteRegDate").Value
+if (PatNum != "")
+	GuiControl, 1: , Button28, %IssDate%
+else GuiControl, 1: , Button28, %RegDate%
 
-Button5:
-GuiControlGet, StatusButton5, , Button5
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton5
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton5
-GuiControl, 1: , Edit1, %BusinessCard%
-return
+GuiControl, 1: , Button29, % ie.document.getElementByID("fldstrParentPCTNumber").Value
+GuiControl, 1: , Button30, % ie.document.getElementByID("flddteParentPCTDate").Value
+GuiControl, 1: , Button31, % ie.document.getElementByID("fldstrParentPatNumber").Value
+GuiControl, 1: , Button32, % ie.document.getElementByID("flddteParentIssDate").Value
 
-Button6:
-GuiControlGet, StatusButton6, , Button6
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton6
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton6
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button7:
-GuiControlGet, StatusButton7, , Button7
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton7
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton7
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button8:
-GuiControlGet, StatusButton8, , Button8
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton8
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton8
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button9:
-GuiControlGet, StatusButton9, , Button9
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := "PH: " StatusButton9
-	else
-		BusinessCard := StatusEdit1 "`n" "PH: " StatusButton9
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button10:
-GuiControlGet, StatusButton10, , Button10
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := "FAX: "StatusButton10
-	else
-		BusinessCard := StatusEdit1 "`n" "FAX: " StatusButton10
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button11:
-GuiControlGet, StatusButton11, , Button11
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton11
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton11
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button12:
-GuiControlGet, StatusButton12, , Button12
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton12
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton12
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button13:
-GuiControlGet, StatusButton13, , Button13
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton13
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton13
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button14:
-GuiControlGet, StatusButton14, , Button14
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton14
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton14
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button15:
-GuiControlGet, StatusButton15, , Button15
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton15
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton15
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button16:
-GuiControlGet, StatusButton16, , Button16
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton16
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton16
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button17:
-GuiControlGet, StatusButton17, , Button17
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton17
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton17
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button18:
-GuiControlGet, StatusButton18, , Button18
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton18
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton18
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button19:
-GuiControlGet, StatusButton19, , Button19
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton19
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton19
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button20:
-GuiControlGet, StatusButton20, , Button20
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton20
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton20
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button21:
-GuiControlGet, StatusButton21, , Button21
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton21
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton21
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button22:
-GuiControlGet, StatusButton22, , Button22
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton22
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton22
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button23:
-GuiControlGet, StatusButton23, , Button23
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton23
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton23
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button24:
-GuiControlGet, StatusButton24, , Button24
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton24
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton24
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button25:
-GuiControlGet, StatusButton25, , Button25
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton25
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton25
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button26:
-GuiControlGet, StatusButton26, , Button26
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton26
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton26
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button27:
-GuiControlGet, StatusButton27, , Button27
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton27
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton27
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button28:
-GuiControlGet, StatusButton28, , Button28
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton28
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton28
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button29:
-GuiControlGet, StatusButton29, , Button29
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton29
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton29
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button30:
-GuiControlGet, StatusButton30, , Button30
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton30
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton30
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button31:
-GuiControlGet, StatusButton31, , Button31
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton31
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton31
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button32:
-GuiControlGet, StatusButton32, , Button32
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton32
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton32
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button33:
-GuiControlGet, StatusButton33, , Button33
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton33
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton33
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button34:
-GuiControlGet, StatusButton34, , Button34
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton34
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton34
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button35:
-GuiControlGet, StatusButton35, , Button35
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton35
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton35
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button36:
-GuiControlGet, StatusButton36, , Button36
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton36
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton36
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button37:
-GuiControlGet, StatusButton37, , Button37
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton37
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton37
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button38:
-GuiControlGet, StatusButton38, , Button38
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton38
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton38
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button39:
-GuiControlGet, StatusButton39, , Button39
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton39
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton39
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button40:
-GuiControlGet, StatusButton40, , Button40
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton40
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton40
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button41:
-GuiControlGet, StatusButton41, , Button41
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton41
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton41
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button42:
-GuiControlGet, StatusButton42, , Button42
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton42
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton42
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button43:
-GuiControlGet, StatusButton43, , Button43
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton43
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton43
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button44:
-GuiControlGet, StatusButton44, , Button44
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton44
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton44
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button45:
-GuiControlGet, StatusButton45, , Button45
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton45
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton45
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button46:
-GuiControlGet, StatusButton46, , Button46
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton46
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton46
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button47:
-GuiControlGet, StatusButton47, , Button47
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton47
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton47
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button48:
-GuiControlGet, StatusButton48, , Button48
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton48
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton48
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button49:
-GuiControlGet, StatusButton49, , Button49
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton49
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton49
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button50:
-GuiControlGet, StatusButton50, , Button50
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton50
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton50
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button51:
-GuiControlGet, StatusButton51, , Button51
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton51
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton51
-GuiControl, 1: , Edit1, %BusinessCard%
-return
-
-Button52:
-GuiControlGet, StatusButton52, , Button52
-GuiControlGet, StatusEdit1, , Edit1
-	if StatusEdit1 =
-		BusinessCard := StatusButton52
-	else
-		BusinessCard := StatusEdit1 "`n" StatusButton52
-GuiControl, 1: , Edit1, %BusinessCard%
 return
 
 PersistBiblio:
-;ie := WBGet()
-;var := ie.LocationURL ;grab current url
-;while ie.busy or ie.ReadyState != 4 ;Wait for page to load
+;ie2 := WBGet()
+;var := ie2.LocationURL ;grab current url
+;while ie2.busy or ie2.ReadyState != 4 ;Wait for page to load
 ;	Sleep, 100
-ClientCode := ie.document.getElementByID("txtClientCode").Value
-ContactName := ie.document.getElementByID("txtContactName").Value
-JobTitle := ie.document.getElementByID("txtTitleJob").Value
-Company := ie.document.getElementByID("txtCompany").Value
-Address := ie.document.getElementByID("txtAddress").Value
-BillingAddress := ie.document.getElementByID("txtAddressBilling").Value
-MailingAddress := ie.document.getElementByID("txtAddressMailing").Value
-City := ie.document.getElementByID("txtCity").Value
-State := ie.document.getElementByID("txtState").Value
-ZIP := ie.document.getElementByID("txtZip").Value
+ClientCode := ie2.document.getElementByID("txtClientCode").Value
+ContactName := ie2.document.getElementByID("txtContactName").Value
+JobTitle := ie2.document.getElementByID("txtTitleJob").Value
+Company := ie2.document.getElementByID("txtCompany").Value
+Address := ie2.document.getElementByID("txtAddress").Value
+BillingAddress := ie2.document.getElementByID("txtAddressBilling").Value
+MailingAddress := ie2.document.getElementByID("txtAddressMailing").Value
+City := ie2.document.getElementByID("txtCity").Value
+State := ie2.document.getElementByID("txtState").Value
+ZIP := ie2.document.getElementByID("txtZip").Value
+Phone := ie2.document.getElementByID("txtBusinessPhone").Value
+Fax := ie2.document.getElementByID("txtFax").Value
+Email := ie2.document.getElementByID("txtEmail").Value
 CityStateZip := City ", " State " " ZIP
-Phone := ie.document.getElementByID("txtBusinessPhone").Value
-Fax := ie.document.getElementByID("txtFax").Value
-Email := ie.document.getElementByID("txtEmail").Value
-StateOfIncorp := ie.document.getElementByID("txtStateofInc").Value
-Country := ie.document.getElementByID("txtCountry").Value
-Webpage := ie.document.getElementByID("txtWebPageDecription").Value
-OtherPhone := ie.document.getElementByID("txtOtherPhone").Value
-MobilePhone := ie.document.getElementByID("txtMobilePhone").Value
-OtherContact := ie.document.getElementByID("txtOtherContacts").Value
-Notes := ie.document.getElementByID("txtNotes").Value
-ReferenceNumber := ie.document.getElementByID("txtRefNum").Value
-
-BillingAtty := ie.document.getElementByID("txtAttyBilling").Value
-AssignedAtty := ie.document.getElementByID("txtAttyAssigned").Value
-WorkingAtty := ie.document.getElementByID("txtAttyWorking").Value
-PatentContact := ie.document.getElementByID("txtContactPA").Value
-PatentAddress := ie.document.getElementByID("txtAddressPA").Value
-ResponsiblePatentAttorney := ie.document.getElementByID("txtRespAttyPA").Value
-WorkingPatentAttorney := ie.document.getElementByID("txtWrkAttyPA").Value
-TrademarkContact := ie.document.getElementByID("txtContactTM").Value
-TrademarkAddress := ie.document.getElementByID("txtAddressTM").Value
-TrademarkResponsibleAttorney := ie.document.getElementByID("txtRespAttyTM").Value
-TrademarkWorkingAttorney := ie.document.getElementByID("txtWrkAttyTM").Value
-LitigationContact := ie.document.getElementByID("txtContactLit").Value
-LitigationAddress := ie.document.getElementByID("txtAddressLit").Value
-ResponsibleLitigationAttorney := ie.document.getElementByID("txtRespAttyLit").Value
-WorkingLitigationAttorney := ie.document.getElementByID("txtWrkAttyLit").Value
-
-
-
-
-
 GuiControl, 1: , Button1, %ClientCode%
 GuiControl, 1: , Button2, %ContactName%
 GuiControl, 1: , Button3, %JobTitle%
@@ -1057,127 +302,7 @@ GuiControl, 1: , Button8, %CityStateZip%
 GuiControl, 1: , Button9, %Phone%
 GuiControl, 1: , Button10, %Fax%
 GuiControl, 1: , Button11, %Email%
-GuiControl, 1: , Button12, %StateOfIncorp%
-GuiControl, 1: , Button13, %Country%
-
-GuiControl, 1: , Button14, %Webpage%
-GuiControl, 1: , Button15, %OtherPhone%
-GuiControl, 1: , Button16, %MobilePhone%
-GuiControl, 1: , Button17, %OtherContact%
-GuiControl, 1: , Button18, %Notes%
-GuiControl, 1: , Button19, %ReferenceNumber%
-GuiControl, 1: , Button20, %BillingAtty%
-GuiControl, 1: , Button21, %AssignedAtty%
-GuiControl, 1: , Button22, %WorkingAtty%
-GuiControl, 1: , Button23, 
-GuiControl, 1: , Button24, 
-GuiControl, 1: , Button25, 
-GuiControl, 1: , Button26, 
-
-GuiControl, 1: , Button27, %PatentContact%
-GuiControl, 1: , Button28, %PatentAddress%
-GuiControl, 1: , Button29, %ResponsiblePatentAttorney%
-GuiControl, 1: , Button30, %WorkingPatentAttorney%
-GuiControl, 1: , Button31, 
-GuiControl, 1: , Button32, %TrademarkContact%
-GuiControl, 1: , Button33, %TrademarkResponsibleAttorney%
-GuiControl, 1: , Button34, %TrademarkWorkingAttorney%
-GuiControl, 1: , Button35, 
-GuiControl, 1: , Button36, %LitigationContact%
-GuiControl, 1: , Button37, %LitigationAddress%
-GuiControl, 1: , Button38, %ResponsibleLitigationAttorney%
-GuiControl, 1: , Button39, %WorkingLitigationAttorney%
-
-GuiControl, 1: , Button40, %ReferenceNumber%
-GuiControl, 1: , Button41, %ReferenceNumber%
-GuiControl, 1: , Button42, %ReferenceNumber%
-GuiControl, 1: , Button43, %ReferenceNumber%
-GuiControl, 1: , Button44, %ReferenceNumber%
-GuiControl, 1: , Button45, %ReferenceNumber%
-GuiControl, 1: , Button46, %ReferenceNumber%
-GuiControl, 1: , Button47, %ReferenceNumber%
-GuiControl, 1: , Button48, %ReferenceNumber%
-GuiControl, 1: , Button49, %ReferenceNumber%
-GuiControl, 1: , Button50, %ReferenceNumber%
-GuiControl, 1: , Button51, %ReferenceNumber%
-GuiControl, 1: , Button52, %ReferenceNumber%
-
 return
-
-
-
-
-/*
-Client Code - txtClientCode
-Billing Attorney - txtAttyBilling
-Assigned Attorney - txtAttyAssigned
-Working Attorney - txtAttyWorking
-Contact - txtContactName
-Job Title - txtTitleJob
-Company - txtCompany
-Address - txtAddress
-Billing Address - txtAddressBilling
-Mailing Address - txtAddressMailing
-City - txtCity
-State - txtState
-State of Incorporation - txtStateofInc
-Country - txtCountry
-ZIP - txtZip
-Business Phone - txtBusinessPhone
-Fax - txtFax
-Email - txtEmail
-Web Page - txtWebPageDecription
-Other Phone - txtOtherPhone
-Mobile Phone - txtMobilePhone
-Foreign Associate - chkForeignAssoc (checkbox)
-INTA - chkINTA (checkbox)
-Holiday - chkHoliday (checkbox)
-INT Seminar - chkINTSeminar (checkbox)
-KMOB Seminar - chkCASeminar (checkbox)
-Other Contacts - txtOtherContacts
-Notes - txtNotes
-Reference Number - txtRefNum
-Patent Contact - txtContactPA
-Patent Address - txtAddressPA
-Responsible Patent Attorney - txtRespAttyPA
-Working Patent Attorney - txtWrkAttyPA
-Trademark Contact - txtContactTM
-Trademark Address - txtAddressTM
-Trademark Responsible Attorney - txtRespAttyTM
-Trademark Working Attorney - txtWrkAttyTM
-Litigation Contact - txtContactLit
-Litigation Address - txtAddressLit
-Responsible Litigation Attorney - txtRespAttyLit
-Working Litigation Attorney - txtWrkAttyLit
-Inactive - chkInactive (checkbox)
-Inactive Description - txtInactiveReason
-Flag = chkFlag (checkbox)
-Flag Description - txtFlagDescription
-Engagement Agreement - chkEngAgree (checkbox)
-Annuities - txtAnnuities
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 GuiClose:
 ExitApp
@@ -1198,12 +323,3 @@ WBGet(WinTitle="ahk_class IEFrame", Svr#=1) {               ;// based on ComObjQ
       }
    }
 }
-
-
-
-
-
-
-
-
-

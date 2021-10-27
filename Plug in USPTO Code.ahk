@@ -11,12 +11,11 @@ CoordMode, Mouse, Client
 CustomColor = EEAA99  ; Can be any RGB color (it will be made transparent below).
 Gui +LastFound +AlwaysOnTop +Caption +ToolWindow +Resize ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
 Gui, Color, %CustomColor%
-Gui, Font, s108  ; Set a large font size (32-point).
+Gui, Font, s12  ; Set a large font size (32-point).
 Gui, Add, Text, gPicture vMyText cRed x0 y0, XXXXX YYYYY  | %Clipboard% ; XX & YY serve to auto-size the window.
 ; Make all pixels of this color transparent and make the text itself translucent (150):
-WinSet, TransColor, %CustomColor% 
+;WinSet, TransColor, %CustomColor% 
 SetTimer, UpdateOSD, 1000
-Gosub, UpdateOSD  ; Make the first update immediate rather than waiting for the timer.
 Gui, Show, x500 y500 w800 NoActivate  ; NoActivate avoids deactivating the currently active window.
 return
 
@@ -28,9 +27,9 @@ UpdateOSD:
 Test := ""
 Emailemail := ""
 NumberOfEmails = 0
-;mail := ComObjActive("Outlook.Application").GetNameSpace("MAPI").GetDefaultFolder(6)
+mail := ComObjActive("Outlook.Application").GetNameSpace("MAPI").GetDefaultFolder(6)
 ;mail := ComObjActive("Outlook.Application").GetNameSpace("MAPI").GetSharedDefaultFolder("Instructions.Mailbox", olFolder)
-mail := ComObjActive("Outlook.Application").GetNameSpace("MAPI").GetSharedDefaultFolder(Outlook.Recipient, olFolder)
+;mail := ComObjActive("Outlook.Application").GetNameSpace("MAPI").GetSharedDefaultFolder(Outlook.Recipient, olFolder)
 oExp := ComObjActive("Outlook.Application").ActiveExplorer
 MyItems := mail.Items
 MyItems.Sort("[Received]", true)
@@ -43,10 +42,21 @@ for MailItem, in  MyItems {
    ; oExp.AddToSelection(MailItem)
    ; MsgBox, 4, Confirm Step, % "Item " A_Index " selected with subject " MailItem.Subject ".`nContinue?"
 	Emailemail := MailItem.Subject
-	MsgBox, % MailItem.Subject.Category.Name
+	Emailbody  := MailItem.Body
+
+	;MsgBox, % MailItem.Subject.Category.Name
 	NumberOfEmails++
-	ifinString, Emailemail, hanbev
-		Test := "PCT APP! " NumberOfEmails
+	ifinString, Emailemail, authentication
+		{
+		StringSplit, emailbody, emailbody, `n
+		StringSplit, testtest, emailbody4, %A_Space%
+		StringReplace, AuthCode, testtest5, ., % ""
+
+		MsgBox, %AuthCode%
+		
+		Test := AuthCode 
+		SetTimer, UpdateOSD, 15000
+		}
 }
 
 MouseGetPos, MouseX, MouseY

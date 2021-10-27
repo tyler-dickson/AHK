@@ -14,36 +14,24 @@ Clipboard =
 Sleep 100
 SendInput ^c
 ClipWait, 1
-iManageFileNumber := "iwl:dms=OC-IDMS&&lib=KMOB&&num=" Clipboard
-;InputBox, iManageFileNumber, Test test test, iManage File Number to Open., , 300, 137
-;Msgbox, %iManageFileNumber%
-;iManageFileNumber := "iwl:dms=OC-IDMS&&lib=KMOB&&num=" iManageFileNumber
-;Msgbox, %iManageFileNumber%
-;Run "iwl:dms=OC-IDMS&&lib=KMOB&&num=13253938"
+iManageFileNumber := "iwl:dms=OC-IDMS&&lib=KMOB&&num=" Clipboard "&ver=&latest=1&command=openrocmd"
 Run % iManageFileNumber
 return
 
 
 CloseWindow:
 IfWinActive, WorkSite, The version of this document                
+	{
+	WinActivate,  iManage, The version of this document 
+	Sleep 100
 	ControlSend,  , {Alt down}Y{Alt up}, WorkSite
+	}
+IfWinExist, iManage, The version of this document 
+	{
+	WinActivate,  iManage, The version of this document 
+	Sleep 100
+	ControlSend,  , {Alt down}Y{Alt up}, iManage
+	}
 IfWinActive, Microsoft Excel Security Notice
 	ControlSend,  , {Alt down}Y{Alt up}, Microsoft Excel Security Notice
 return
-
-
-
-
-
-/*
-WorkSite
-
-The version of this document
-
-
-ahk_class #32770
-ahk_exe OUTLOOK.EXE
-
-
-
-*/
