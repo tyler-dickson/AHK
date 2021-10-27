@@ -3,31 +3,7 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance, Force
-Menu, Tray, Icon, wmploc.dll , 27
 
-global Username
-global ATDate	
-global ComputerName
-Computername = %A_Username%
-
-if Computername = lara.anabtawi
-	Computername = lara.hamdan
-if Computername = neysa.perkins
-	Computername = neysa.cabudol
-if Computername = jessica.george
-	Computername = jessica.egigian
-if Computername = sabrina.fleming
-	Computername = sabrina.kellogg
-	
-IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, DoubleTap
-	if Uses = ERROR
-		IniWrite, 1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, DoubleTap
-	else
-		{
-		Uses++
-		IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, DoubleTap
-		}
-return
 
 $*Alt::
 KeyWait, Alt
@@ -100,15 +76,15 @@ NewClipboard = %Clipboard%
 		}
 Sleep 100
 Clipboard = %LastClipboard%
-gosub RecordKeystrokes
-SendInput {Ctrl up}
 return
 }
 
+#IfWinNotActive ahk_exe EXCEL.EXE
 QuickDate()
 {
 FormatTime, CurrentDateTime,, MM/dd/yyyy
-OldClipboard = %Clipboard%
+;MsgBox, Not in Excel window.
+;OldClipboard = %Clipboard%
 Clipboard =  ;
 Sleep 50
 Clipboard = %CurrentDateTime%
@@ -117,31 +93,10 @@ SendInput ^v
 Sleep 250
 Clipboard = %OldClipboard%
 Sleep 100
-gosub RecordDateShortcut
-SendInput {Ctrl up}
 return
 }
+#IfWinActive
 
-RecordKeystrokes:
-formattime, ThisHour, , MM.dd.yyyy-htt
-IniRead, Keystrokes, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, Keystrokes
-IniRead, KeystrokesH, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\Hourly\%Computername%-%ThisHour%.ini, Achievements, Keystrokes
-StringLen, NameLen, Username
-StringLen, DateLen, ATDate
-KeystrokesSaved := (NameLen + DateLen + 3)
-Keystrokes+=%KeystrokesSaved%
-KeystrokesSavedH := (NameLen + DateLen + 3)
-KeystrokesH+=%KeystrokesSavedH%
-IniWrite, %Keystrokes%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, Keystrokes
-IniWrite, %KeystrokesH%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\Hourly\%Computername%-%ThisHour%.ini, Achievements, Keystrokes
-return
 
-RecordDateShortcut:
-formattime, ThisHour, , MM.dd.yyyy-htt
-IniRead, DateShortcut, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, DateShortcut
-IniRead, DateShortcutH, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\Hourly\%Computername%-%ThisHour%.ini, Achievements, DateShortcut
-DateShortcut++
-DateShortcutH++
-IniWrite, %DateShortcut%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, DateShortcut
-IniWrite, %DateShortcutH%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\Hourly\%Computername%-%ThisHour%.ini, Achievements, DateShortcut
-return
+
+

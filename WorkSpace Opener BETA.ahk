@@ -63,19 +63,19 @@ Sleep 200
 Send ^v
 Sleep 200
 SendInput {Enter}
-Sleep 750
+Sleep 200
 WinWait ahk_class #32770
 Sleep 1250
 MouseMove, 231, 155
-Sleep 750
+Sleep 200
 Click 2
 gosub RecordWorkSpaceOpener
 BlockInput, MouseMoveOff
-SendInput {Alt}
+SendInput {Alt down}
 Sleep 250
 SendInput H
 Sleep 250
-SendInput {Alt}
+SendInput {Alt up}
 return
 
 RecordWorkSpaceOpener:

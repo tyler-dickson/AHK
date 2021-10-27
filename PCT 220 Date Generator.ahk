@@ -750,69 +750,104 @@ IniRead, Username, C:\Users\%A_Username%\AHKPrefs.ini, Username, Username
 IniRead, ATPartner, C:\Users\%A_Username%\AHKPrefs.ini, Username, ATPartner
 IniRead, ATDate, C:\Users\%A_Username%\AHKPrefs.ini, Username, ATDate
 
-ie := WBGet()
-	if IsObject(ie) = 0
-		{
-		Run "iexplore.exe"
-		Sleep 3000
-		ie := WBGet()
-		return
-		}
-	else
-
-var := ie.LocationURL ;grab current url
-while ie.busy or ie.ReadyState != 4 ;Wait for page to load
-	Sleep, 100
+if  hWnd :=  WinExist("ahk_class IEFrame")
+{
+   For ie in ComObjCreate("Shell.Application").Windows
+   {} Until  (hWnd = ie.hwnd)
+   params := [OutputVar, 32]
+}
+else
+{
+   ie := ComObjCreate("InternetExplorer.Application")
+  ie.Visible := True
+   params := [OutputVar, 32]
+}
+;ie.Navigate(params*)
+While IE.Busy ; simple wait for page to load
+Sleep, 100 ; 1/10 second
 WinActivate, ahk_class IEFrame
 Sleep 200
-;		OldClipboard := Clipboard                                                                ; This saves clipboard content for later.
- ;       Clipboard = ;                                                                            ; This empties the clipboard.
+		OldClipboard := Clipboard                                                                ; This saves clipboard content for later.
+        Clipboard = ;                                                                            ; This empties the clipboard.
         MyString = ;                                                                             ; Sets MyString to blank.
         AppString = ;
         FrontString = ;
         
         PatentString = http://oc-docketing/CPi/patfrmCountryApplication.aspx?Key=                ; Prefix section of a Live Patent (58 Characters).
         PatentATString = http://oc-docketing/CPiAgent/patfrmCountryApplicationAgent.aspx?Key=    ; Prefix section of a AT Patent (68 Characters).
-
+        TMString = http://oc-docketing/CPi/tmkfrmTrademark.aspx?Key=                             ; Prefix section of a Live Trademark (49 Characters).
+        TMATString = http://oc-docketing/CPiAgent/tmkfrmTrademarkAgent.aspx?Key=   
 				
         PatentActionString = http://oc-docketing/CPi/patfrmActionDue.aspx?key=                   ; Patent Action (49 + 7)
         PatentATActionString = http://oc-docketing/CPiAgent/patfrmActionDueAgent.aspx?key=       ; Patent AT Action (60 + 7)
+        TMActionString = http://oc-docketing/CPi/tmkfrmActionDue.aspx?Key=                       ; TM Live Action (49 + 6)
+        TMATActionString = http://oc-docketing/CPiAgent/tmkfrmActionDueAgent.aspx?Key=           ; TM AT Action (59 + 6)
 		
 		NewPATLiveAction = http://oc-docketing/CPi/patfrmActionDue.aspx?key=-1&key2=             ;57 characters + 7 = 64
 		NewPATATAction   = http://oc-docketing/CPiAgent/patfrmActionDueAgent.aspx?key=-1&key2=   ;67 characters + 7 = 74
+		NewTMLiveAction = http://oc-docketing/CPi/tmkfrmActionDue.aspx?key=-1&key2=              ;57 characters + 6 = 63
+		NewTMATAction   = http://oc-docketing/CPiAgent/tmkfrmActionDueAgent.aspx?key=-1&key2=    ;67 characters + 6 = 73
 					
-;SendInput ^l
+SendInput ^l
 Sleep 200
-;SendInput ^c
-;ClipWait, .2      
-;MyString := clipboard                            ; Fetch URL into variable
-if Instr(var, PatentString)
+SendInput ^c
+ClipWait, .2      
+MyString := clipboard                            ; Fetch URL into variable
+if Instr(MyString, PatentString)
      {
-     StringLeft, FrontString, var, 65       ; Stores first 67+7=74 characters of URL for Live Patent Action with AppID.
+     StringLeft, FrontString, MyString, 65       ; Stores first 67+7=74 characters of URL for Live Patent Action with AppID.
      StringRight, AppString, FrontString, 7      ; Stores last 7 characters of URL to variable for AppID.
      ;FrontString = %NewPATATAction%
      FrontString = %NewPATLiveAction%
      }
-else if Instr(var, PatentATString)
+else if Instr(MyString, TMString)
      {
-     StringLeft, FrontString, var, 75       ; Stores first 78+7=85 characters of URL for AT Patent Action with AppID.
+     StringLeft, FrontString, MyString, 55       ; Stores first 67+6=73 characters of URL for Live TM Action with AppID.
+     StringRight, AppString, FrontString, 6      ; Stores last 6 characters of URL to variable for AppID.
+     ;FrontString = %NewTMATAction%
+	 FrontString = %NewTMLiveAction%
+     }	 
+else if Instr(MyString, PatentATString)
+     {
+     StringLeft, FrontString, MyString, 75       ; Stores first 78+7=85 characters of URL for AT Patent Action with AppID.
      StringRight, AppString, FrontString, 7      ; Stores last 7 characters of URL to variable for AppID.
      ;FrontString = %NewPATLiveAction%
 	 FrontString = %NewPATATAction%
      }
-else if Instr(var, PatentActionString)
+else if Instr(MyString, TMATString)
      {
-     StringLeft, FrontString, var, 74       ; Stores first 67+7=74 characters of URL for Live Patent Action with AppID.
+     StringLeft, FrontString, MyString, 65       ; Stores first 77+6=83 characters of URL for AT TM Action with AppID.
+     StringRight, AppString, FrontString, 6      ; Stores last 6 characters of URL to variable for AppID.
+     ;FrontString = %NewTMLiveAction%
+	 FrontString = %NewTMATAction%
+     }
+else if Instr(MyString, PatentActionString)
+     {
+     StringLeft, FrontString, MyString, 74       ; Stores first 67+7=74 characters of URL for Live Patent Action with AppID.
      StringRight, AppString, FrontString, 7      ; Stores last 7 characters of URL to variable for AppID.
      ;FrontString = %NewPATATAction%
      FrontString = %NewPATLiveAction%
      }
-else if Instr(var, PatentATActionString)
+else if Instr(MyString, PatentATActionString)
      {
-     StringLeft, FrontString, var, 85       ; Stores first 78+7=85 characters of URL for AT Patent Action with AppID.
+     StringLeft, FrontString, MyString, 85       ; Stores first 78+7=85 characters of URL for AT Patent Action with AppID.
      StringRight, AppString, FrontString, 7      ; Stores last 7 characters of URL to variable for AppID.
      ;FrontString = %NewPATLiveAction%
 	 FrontString = %NewPATATAction%
+     }
+else if Instr(MyString, TMActionString)
+     {
+     StringLeft, FrontString, MyString, 73       ; Stores first 67+6=73 characters of URL for Live TM Action with AppID.
+     StringRight, AppString, FrontString, 6      ; Stores last 6 characters of URL to variable for AppID.
+     ;FrontString = %NewTMATAction%
+	 FrontString = %NewTMLiveAction%
+     }
+else if Instr(MyString, TMATActionString)
+     {
+     StringLeft, FrontString, MyString, 83       ; Stores first 77+6=83 characters of URL for AT TM Action with AppID.
+     StringRight, AppString, FrontString, 6      ; Stores last 6 characters of URL to variable for AppID.
+     ;FrontString = %NewTMLiveAction%
+	 FrontString = %NewTMATAction%
      }
 else
      {
@@ -845,19 +880,3 @@ Return
 
 GuiClose:
 ExitApp
-
-;************Pointer to Open IE Window******************
-WBGet(WinTitle="ahk_class IEFrame", Svr#=1) {               ;// based on ComObjQuery docs
-   static msg := DllCall("RegisterWindowMessage", "str", "WM_HTML_GETOBJECT")
-        , IID := "{0002DF05-0000-0000-C000-000000000046}"   ;// IID_IWebBrowserApp
-;//     , IID := "{332C4427-26CB-11D0-B483-00C04FD90119}"   ;// IID_IHTMLWindow2
-   SendMessage msg, 0, 0, Internet Explorer_Server%Svr#%, %WinTitle%
-
-   if (ErrorLevel != "FAIL") {
-      lResult:=ErrorLevel, VarSetCapacity(GUID,16,0)
-      if DllCall("ole32\CLSIDFromString", "wstr","{332C4425-26CB-11D0-B483-00C04FD90119}", "ptr",&GUID) >= 0 {
-         DllCall("oleacc\ObjectFromLresult", "ptr",lResult, "ptr",&GUID, "ptr",0, "ptr*",pdoc)
-         return ComObj(9,ComObjQuery(pdoc,IID,IID),1), ObjRelease(pdoc)
-      }
-   }
-}

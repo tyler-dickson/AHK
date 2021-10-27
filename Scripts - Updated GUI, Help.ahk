@@ -519,7 +519,7 @@ Gui, 1: Add, Button, x70 y350 w80 h30 Default gaOK , Update
 Gui, 1: Add, Button, x155 y350 w80 h30 gCancel , Cancel
 
 Gui, 1: Font, s6
-Gui, 1: Add, Text, x255 h10 y375, v.1.20.2017
+Gui, 1: Add, Text, x255 h10 y375, v.1.16.2017
 Gui, 1: Font
 
 Gui, Tab, 2
@@ -728,7 +728,7 @@ Example1:
 PicSwitch = 0
 ;H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\QuickDate1.png ;location of gif you want to show
 Gui, 14: New, AlwaysOnTop Owner, Examples
-Gui, 14: Add, Picture,w603 h335, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\QuickDateAndName1.png ;location of gif you want to show
+Gui, 14: Add, Picture,w603 h335, C:\Users\tyler.dickson\Desktop\QuickDateAndName1.png ;location of gif you want to show
 Gui, 14: Add, Button, x0 y0 w40 h20 gNextPic1, 1 of 2
 Gui, 14: Show , w603 h335
 return
@@ -738,7 +738,7 @@ NextPic1:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w599 h337
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\QuickDateAndName2.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\QuickDateAndName2.png
 		GuiControl, 14: , Button1, 2 of 2
 		PicSwitch = 1
 		Gui, 14: Show , w599 h337
@@ -748,7 +748,7 @@ NextPic1:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w603 h335
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\QuickDateAndName1.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\QuickDateAndName1.png
 		GuiControl, 14: , Button1, 1 of 2
 		PicSwitch = 0
 		Gui, 14: Show , w603 h335
@@ -762,7 +762,7 @@ PicSwitch = 0
 Gui, 14: New, AlwaysOnTop Owner, Examples
 Gui, 14: Add, Button, x0 y0 w40 h20 gNextPic2, 1 of 2
 ;Gui, 14: Add, Picture, w600 h-1, C:\Users\tyler.dickson\Desktop\bunny1.gif ;location of gif you want to show
-Gui, 14: Add, Picture, w542 h315, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SystemSwitch1.png ;location of gif you want to show
+Gui, 14: Add, Picture, w542 h315, C:\Users\tyler.dickson\Desktop\SystemSwitch1.png ;location of gif you want to show
 Gui, 14: Show ,w542 h315
 return
 
@@ -771,7 +771,7 @@ NextPic2:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w552 h317
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SystemSwitch2.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\SystemSwitch2.png
 		GuiControl, 14: , Button1, 2 of 2
 		PicSwitch = 1
 		Gui, 14: Show , w552 h317
@@ -781,7 +781,7 @@ NextPic2:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w542 h315
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SystemSwitch1.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\SystemSwitch1.png
 		GuiControl, 14: , Button1, 1 of 2
 		PicSwitch = 0
 		Gui, 14: Show , w542 h315
@@ -794,7 +794,7 @@ PicSwitch = 0
 ;H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\QuickDate1.png ;location of gif you want to show
 Gui, 14: New, AlwaysOnTop Owner, Examples
 Gui, 14: Add, Button, x0 y0 w40 h20 gNextPic3, 1 of 4
-Gui, 14: Add, Picture, w788 h317, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SettingsBar1.png ;location of gif you want to show
+Gui, 14: Add, Picture, w788 h317, C:\Users\tyler.dickson\Desktop\SettingsBar1.png ;location of gif you want to show
 Gui, 14: Show , w788 h317
 return
 
@@ -803,7 +803,7 @@ NextPic3:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w788 h318
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SettingsBar2.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\SettingsBar2.png
 		GuiControl, 14: , Button1, 2 of 4
 		PicSwitch = 1
 		Gui, 14: Show , w788 h318
@@ -813,7 +813,7 @@ NextPic3:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w440 h434
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SettingsBar3.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\SettingsBar3.png
 		GuiControl, 14: , Button1, 3 of 4
 		PicSwitch = 2
 		Gui, 14: Show , w440 h434
@@ -823,7 +823,7 @@ NextPic3:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w455 h437
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SettingsBar4.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\SettingsBar4.png
 		GuiControl, 14: , Button1, 4 of 4
 		PicSwitch = 3
 		Gui, 14: Show , w455 h437
@@ -833,7 +833,7 @@ NextPic3:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w788 h317
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SettingsBar1.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\SettingsBar1.png
 		GuiControl, 14: , Button1, 1 of 4
 		PicSwitch = 0
 		Gui, 14: Show , w788 h317
@@ -846,7 +846,7 @@ PicSwitch = 0
 ;H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\QuickDate1.png ;location of gif you want to show
 Gui, 14: New, AlwaysOnTop Owner, Examples
 Gui, 14: Add, Button, x0 y0 w40 h20 gNextPic4, 1 of 4
-Gui, 14: Add, Picture, w586 h350, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\CopyClipboard1.png ;location of gif you want to show
+Gui, 14: Add, Picture, w586 h350, C:\Users\tyler.dickson\Desktop\CopyClipboard1.png ;location of gif you want to show
 Gui, 14: Show ,w586 h350
 return
 
@@ -855,7 +855,7 @@ NextPic4:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w591 h399
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\CopyClipboard2.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\CopyClipboard2.png
 		GuiControl, 14: , Button1, 2 of 4
 		PicSwitch = 1
 		Gui, 14: Show , w591 h399
@@ -865,7 +865,7 @@ NextPic4:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w586 h419
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\CopyClipboard3.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\CopyClipboard3.png
 		GuiControl, 14: , Button1, 3 of 4
 		PicSwitch = 2
 		Gui, 14: Show , w586 h419
@@ -875,7 +875,7 @@ NextPic4:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w593 h400
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\CopyClipboard4.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\CopyClipboard4.png
 		GuiControl, 14: , Button1, 4 of 4
 		PicSwitch = 3
 		Gui, 14: Show , w593 h400
@@ -885,7 +885,7 @@ NextPic4:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w586 h350
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\CopyClipboard1.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\CopyClipboard1.png
 		GuiControl, 14: , Button1, 1 of 4
 		PicSwitch = 0
 		Gui, 14: Show , w586 h350
@@ -898,7 +898,7 @@ PicSwitch = 0
 ;H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\QuickDate1.png ;location of gif you want to show
 Gui, 14: New, AlwaysOnTop Owner, Examples
 Gui, 14: Add, Button, x0 y0 w40 h20 gNextPic5, 1 of 2
-Gui, 14: Add, Picture, w550 h301, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\ExcelHyperlink1.png ;location of gif you want to show
+Gui, 14: Add, Picture, w550 h301, C:\Users\tyler.dickson\Desktop\ExcelHyperlink1.png ;location of gif you want to show
 Gui, 14: Show ,w550 h301
 return
 
@@ -907,7 +907,7 @@ NextPic5:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w374 h248
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\ExcelHyperlink2.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\ExcelHyperlink2.png
 		GuiControl, 14: , Button1, 2 of 2
 		PicSwitch = 1
 		Gui, 14: Show , w374 h248
@@ -917,7 +917,7 @@ NextPic5:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w550 h301
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\ExcelHyperlink1.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\ExcelHyperlink1.png
 		GuiControl, 14: , Button1, 1 of 2
 		PicSwitch = 0
 		Gui, 14: Show , w550 h301
@@ -930,7 +930,7 @@ PicSwitch = 0
 ;H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\QuickDate1.png ;location of gif you want to show
 Gui, 14: New, AlwaysOnTop Owner, Examples
 Gui, 14: Add, Button, x0 y0 w60 h20 gNextPic6, 1 of 11
-Gui, 14: Add, Picture, w660 h304, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse1.png ;location of gif you want to show
+Gui, 14: Add, Picture, w660 h304, C:\Users\tyler.dickson\Desktop\Multiuse1.png ;location of gif you want to show
 Gui, 14: Show ,w660 h304
 return
 
@@ -939,7 +939,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w657 h371
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse2.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse2.png
 		GuiControl, 14: , Button1, 2 of 11
 		PicSwitch = 1
 		Gui, 14: Show , w657 h371
@@ -949,7 +949,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w648 h343
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse3.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse3.png
 		GuiControl, 14: , Button1, 3 of 11
 		PicSwitch = 2
 		Gui, 14: Show , w648 h343
@@ -959,7 +959,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w647 h382
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse4.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse4.png
 		GuiControl, 14: , Button1, 4 of 11
 		PicSwitch = 3
 		Gui, 14: Show , w647 h382
@@ -969,7 +969,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w848 h267
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse5.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse5.png
 		GuiControl, 14: , Button1, 5 of 11
 		PicSwitch = 4
 		Gui, 14: Show , w848 h267
@@ -979,7 +979,7 @@ NextPic6:
 		{
 		Gui, 14: Hide ,
 		GuiControl, 14: Move , Static1, w699 h266
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse6.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse6.png
 		GuiControl, 14: , Button1, 6 of 11
 		PicSwitch = 5
 		Gui, 14: Show , w699 h266
@@ -989,7 +989,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w501 h343
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse7.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse7.png
 		GuiControl, 14: , Button1, 7 of 11
 		PicSwitch = 6
 		Gui, 14: Show , w501 h343
@@ -999,7 +999,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w712 h299
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse8.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse8.png
 		GuiControl, 14: , Button1, 8 of 11
 		PicSwitch = 7
 		Gui, 14: Show , w712 h299
@@ -1009,7 +1009,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w712 h258
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse9.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse9.png
 		GuiControl, 14: , Button1, 9 of 11
 		PicSwitch = 8
 		Gui, 14: Show , w712 h258
@@ -1019,7 +1019,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w712 h258
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse10.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse10.png
 		GuiControl, 14: , Button1, 10 of 11
 		PicSwitch = 9
 		Gui, 14: Show , w712 h258
@@ -1029,7 +1029,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w662 h275
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse11.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse11.png
 		GuiControl, 14: , Button1, 11 of 11
 		PicSwitch = 10
 		Gui, 14: Show , w662 h275
@@ -1039,7 +1039,7 @@ NextPic6:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w660 h304
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\Multiuse1.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\Multiuse1.png
 		GuiControl, 14: , Button1, 1 of 11
 		PicSwitch = 0
 		Gui, 14: Show , w660 h304
@@ -1053,7 +1053,7 @@ PicSwitch = 0
 ;H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\QuickDate1.png ;location of gif you want to show
 Gui, 14: New, AlwaysOnTop Owner, Examples
 Gui, 14: Add, Button, x0 y0 w40 h20 gNextPic7, 1 of 3
-Gui, 14: Add, Picture, w522 h388, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\EFS1.png ;location of gif you want to show
+Gui, 14: Add, Picture, w522 h388, C:\Users\tyler.dickson\Desktop\EFS1.png ;location of gif you want to show
 Gui, 14: Show ,w522 h388
 return
 
@@ -1062,7 +1062,7 @@ NextPic7:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w628 h558
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\EFS2.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\EFS2.png
 		GuiControl, 14: , Button1, 2 of 3
 		PicSwitch = 1
 		Gui, 14: Show , w628 h558
@@ -1072,7 +1072,7 @@ NextPic7:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w560 h400
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\EFS3.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\EFS3.png
 		GuiControl, 14: , Button1, 3 of 3
 		PicSwitch = 2
 		Gui, 14: Show , w560 h400
@@ -1082,7 +1082,7 @@ NextPic7:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w522 h388
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\EFS1.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\EFS1.png
 		GuiControl, 14: , Button1, 1 of 3
 		PicSwitch = 0
 		Gui, 14: Show , w522 h388
@@ -1096,7 +1096,7 @@ PicSwitch = 0
 ;H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\QuickDate1.png ;location of gif you want to show
 Gui, 14: New, AlwaysOnTop Owner, Examples
 Gui, 14: Add, Button, x0 y0 w40 h20 gNextPic8, 1 of 2
-Gui, 14: Add, Picture, w601 h420, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SideBar1.png ;location of gif you want to show
+Gui, 14: Add, Picture, w601 h420, C:\Users\tyler.dickson\Desktop\SideBar1.png ;location of gif you want to show
 Gui, 14: Show ,w601 h420
 return
 
@@ -1105,7 +1105,7 @@ NextPic8:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w475 h484
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SideBar2.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\SideBar2.png
 		GuiControl, 14: , Button1, 2 of 2
 		PicSwitch = 1
 		Gui, 14: Show , w475 h484
@@ -1115,7 +1115,7 @@ NextPic8:
 		{
 		Gui, 14: Hide , 
 		GuiControl, 14: Move , Static1, w601 h420
-		GuiControl, 14: , Static1, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\SideBar1.png
+		GuiControl, 14: , Static1, C:\Users\tyler.dickson\Desktop\SideBar1.png
 		GuiControl, 14: , Button1, 1 of 2
 		PicSwitch = 0
 		Gui, 14: Show , w601 h420

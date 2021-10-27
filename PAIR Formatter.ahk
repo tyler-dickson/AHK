@@ -52,9 +52,9 @@ Sleep 500
 FileRead, SavedContent, C:\Users\%Computername%\PAIRTemp.txt
 StringSplit, SavedContent, SavedContent, `n
 Sleep 200
-;LoopAmount := SavedContent0 - 1
+LoopAmount := SavedContent0 - 1
 
-Loop %SavedContent0%        ; %LoopAmount%
+Loop %LoopAmount%
 {
 PreviousLoop := (A_Index - 1)
 StringMid, AppNo%A_Index%,      SavedContent%A_Index%,  1, 8 
