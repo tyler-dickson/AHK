@@ -18,28 +18,6 @@ global HalfScreenHeight := ScreenHeight * .50       ;964.8
 SetTitleMatchMode, 2
 Menu, Tray, Icon, compstui.dll , 41
 
-
-global Computername
-StringSplit, FirstName, A_Username, . ,
-Loop, Files, C:/Users/%FirstName1%.*, D
-	UserFolder = %A_LoopFileName%
-if A_Username = UserFolder 
-	Computername := A_Username
-else
-	Computername := UserFolder	
-	
-	
-IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-	if  APIUses = ERROR
-		{
-		APIUses = 0
-		IniWrite, %APIUses%, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-		IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-		}
-
-
-
-
 ; NEWCPI
 global NewCPI
 
@@ -2679,8 +2657,8 @@ return
 /*
 
 [Position]
-FKeysPosX=23
-FKeysPosY=769
+FKeysPosX=1716
+FKeysPosY=619
 
 [Set2]
 Hidden=0
@@ -2704,9 +2682,9 @@ Hidden=0
 2x1=INT-PAT STATUS CHECK
 2x1Hidden=0
 2x1Text=asdf
-2x2=INT-PAT INSTR APPLICATION FILING
+2x2=INT-PAT INSTR NPHASE APPLICATION FILING
 2x2Hidden=0
-2x2Text=PAT FILING INSTR
+2x2Text=PAT NPHASE FILING
 2x3=INT-TM INSTR APPLICATION FILING
 2x3Hidden=0
 2x3Text=TM FILING NO PR
@@ -2833,8 +2811,8 @@ Hidden=0
 12x4Text=TM OPP BRIEF
 12x4=INT-TM BRIEF EVIDENCE DEADLINE
 12x4Hidden=0
-13x1Text=OA EARLY
-13x1=INT-PAT OFFICE ACTION INSTR TO FA
+13x1Text=
+13x1=
 13x1Hidden=0
 13x2Text=PCT ART 16M
 13x2=INT-PAT PCT ART.19 16M DEADLINE
@@ -2845,8 +2823,8 @@ Hidden=0
 13x4Text=TM CANCEL RESP
 13x4=INT-TM CANCEL RESPONSE
 13x4Hidden=0
-14x1Text=CN grace period
-14x1=INT-PAT CN NOTIFICATION PERIOD DEADLINE
+14x1Text=
+14x1=
 14x1Hidden=0
 14x2Text=PAT DEMAND 22M
 14x2=INT-PAT PCT DEMAND 22M DEADLINE
@@ -2866,8 +2844,8 @@ Hidden=0
 15x3Text=
 15x3=
 15x3Hidden=0
-15x4Text=APPEAL
-15x4=INT-TM APPEAL NOTICE DEADLINE
+15x4Text=
+15x4=
 15x4Hidden=0
 16x1Text=TM REG FEE
 16x1=INT-TM REGISTRATION FEE
@@ -3567,8 +3545,8 @@ class Chrome
 }
 
 GetAppID() {
-user := "Paperboy@knobbe.com"
-pass := "knobbedocket"
+user := "tyler.dickson@knobbe.com"
+pass := "cpi1"
 Page := ChromeInst.GetPage()
 CPIClientCode := Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_CaseNumber').value").Value
 CPIClientCode2 := Page.Evaluate("document.getElementById('ctl00_Detail_CaseNumber').value").Value
@@ -3586,13 +3564,12 @@ http.Send()
 while (http.Responsetext == "")
 	Sleep 100
 value := JSON.Load(http.Responsetext)
-gosub RecordAPIUses
 return % value.Table[1].appid
 }
 
 GetTmkID() {
-user := "Paperboy@knobbe.com"
-pass := "knobbedocket"
+user := "tyler.dickson@knobbe.com"
+pass := "cpi1"
 Page := ChromeInst.GetPage()
 CPIClientCode := Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_CaseNumber').value").Value
 CPIClientCode2 := Page.Evaluate("document.getElementById('ctl00_Detail_CaseNumber').value").Value
@@ -3610,7 +3587,6 @@ http.Send()
 while (http.Responsetext == "")
 	Sleep 100
 value := JSON.Load(http.Responsetext)
-gosub RecordAPIUses
 return % value.Table[1].tmkId
 }
 
@@ -4022,9 +3998,3 @@ class JSON
 		}
 	}
 }
-
-RecordAPIUses:	
-IniRead, APIUses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
-APIUses++
-IniWrite, %APIUses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
-return

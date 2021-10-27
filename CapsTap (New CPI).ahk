@@ -2,8 +2,6 @@
 
 Created by Tyler Dickson using AutoHotkey. 
 
-https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736%28v=vs.85%29#websocket-maximum-server-connections
-
 */
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -23,7 +21,12 @@ NewCPI = 1
 
 if (NewCPI)
 	{
+;	#Include \\docs-oc\files\Docketing\AutoHotKey\Scripts\Chrome.ahk
+;	FileCreateDir, C:\Users\Tyler.Dickson\Desktop\AHK Startup\ChromeProfile
+;	FileCreateDir, ChromeProfile
 	FileCreateShortcut, % "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", %A_Desktop%\Chrome (AHK).lnk, , % "--remote-debugging-port=9222 -- '%1'", % "Test Description" ;,  IconFile, 
+
+;	Run, %A_Desktop%\Chrome (AHK).lnk
 	
 	if (Chromes := Chrome.FindInstances())
 		global ChromeInst := {"base": Chrome, "DebugPort": Chromes.MinIndex()}
@@ -31,6 +34,8 @@ if (NewCPI)
 		global ChromeInst := new Chrome("ChromeProfile", "https://web05.computerpackages.com/knobbe/patent/patschcountryapplication.aspx" ) ; 	;	global ChromeInst := new Chrome("ChromeProfile", "--app=http://oc-docketing/CPi/patfrmCountryApplication.aspx?Key=1275806")
 	
 	global Page := ChromeInst.GetPage()
+;	Page.Call("Page.navigate", {"url" : "https://web05.computerpackages.com/knobbe/patent/patschcountryapplication.aspx" })
+;	Page.Call("Target.createTarget", {"url" : "https://web05bak.computerpackages.com/knobbeAgent/patent/patschcountryapplication.aspx" })
 	Page.WaitForLoad()
 	Page.Disconnect()
 	}
@@ -43,6 +48,7 @@ Gui, Add, Radio, , Pause
 Gui, Add, Radio, , PrintScreen
 Gui, Add, Radio, , PgUp
 Gui, Add, Radio, , PgDn
+
 
 Gui, Add, Button, gSave, Save Button
 Gui, Show
@@ -81,14 +87,6 @@ else IfWinActive, ahk_class Chrome_WidgetWin_1
 	return 
 else 
 	{
-	ChromeInst := {"base": Chrome, "DebugPort": Chromes.MinIndex()}
-
-;	MsgBox, % Chromes.MinIndex() " | " Chromes.MaxIndex() " | " Chromes.Length()
-;	DebugPort := 9222
-;	if (Chromes := Chrome.FindInstances()).HasKey(DebugPort)
-;		DebugPort := Chromes.MaxIndex() + 1
-;	ChromeInst := new Chrome(ProfilePath,,,, DebugPort)
-
 	Page := ChromeInst.GetPage()
 	newURL := Page.Evaluate("window.location.href").Value
 	
@@ -100,6 +98,7 @@ else
 	Page.Disconnect()
 	}
 return
+
 
 class Chrome
 {

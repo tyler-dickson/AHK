@@ -12,25 +12,6 @@ Menu, Tray, Icon, mmcndmgr.dll , 70
 DoAll := false
 fromExcel := false
 
-
-global Computername
-StringSplit, FirstName, A_Username, . ,
-Loop, Files, C:/Users/%FirstName1%.*, D
-	UserFolder = %A_LoopFileName%
-if A_Username = UserFolder 
-	Computername := A_Username
-else
-	Computername := UserFolder	
-
-IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-	if  APIUses = ERROR
-		{
-		APIUses = 0
-		IniWrite, %APIUses%, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-		IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-		}
-
-
 ; NEWCPI
 global NewCPI
 
@@ -183,8 +164,8 @@ if InStr(location, "patfrmInvention")
 	Page := ChromeInst.GetPage()
 	ClientCode := Page.Evaluate("document.getElementById('ctl00_Detail_CaseNumber').value").Value
 
-	user := "Paperboy@knobbe.com"
-	pass := "knobbedocket"
+	user := "tyler.dickson@knobbe.com"
+	pass := "cpi1"
 	EndPoint1 := "https://web05.computerpackages.com/knobbews/api/Knobbe?queryString="
 
 	EndPoint2 := "SELECT t1.Country, t1.CaseType, t1.AppNumber, t1.FilDate FROM tblPatPriorityInv t1 INNER JOIN tblPatCountryApplication t2 ON t2.InvId = t1.InvId WHERE t2.CaseNumber "
@@ -196,7 +177,7 @@ if InStr(location, "patfrmInvention")
 	while (http.Responsetext == "")
 		Sleep 100
 	value := JSON.Load(http.Responsetext)
-	gosub RecordAPIUses
+
 ;	MsgBox, % value.Table.length()
 ;	MsgBox, % http.Responsetext
 
@@ -223,8 +204,8 @@ else if InStr(location, "patfrmCountryApplication")
 	Page := ChromeInst.GetPage()
 	ClientCode := Page.Evaluate("document.getElementById('ctl00_Detail_CaseNumber_Input').value").Value
 
-	user := "Paperboy@knobbe.com"
-	pass := "knobbedocket"
+	user := "tyler.dickson@knobbe.com"
+	pass := "cpi1"
 	EndPoint1 := "https://web05.computerpackages.com/knobbews/api/Knobbe?queryString="
 
 	EndPoint2 := "SELECT t2.CaseNumber, t1.AssignmentFrom, t1.AssignmentTo, t1.AssignmentStatus, t1.AssignmentDate, t1.Reel, t1.Frame FROM tblPatAssignmentHistory t1 INNER JOIN tblPatCountryApplication t2 ON t2.AppId = t1.AppId WHERE t2.CaseNumber "
@@ -236,7 +217,6 @@ else if InStr(location, "patfrmCountryApplication")
 	while (http.Responsetext == "")
 		Sleep 100
 	value := JSON.Load(http.Responsetext)
-	gosub RecordAPIUses
 
 ;	MsgBox, % value.Table.length()
 ;	MsgBox, % http.Responsetext
@@ -1699,9 +1679,3 @@ class Chrome
 		return obj
 	}
 }
-
-RecordAPIUses:	
-IniRead, APIUses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
-APIUses++
-IniWrite, %APIUses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
-return	

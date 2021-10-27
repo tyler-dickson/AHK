@@ -29,18 +29,6 @@ IniRead, Username, C:\Users\%Computername%\AHKPrefs.ini, Username, Username
 
 formattime, todaysdate, , MM/dd/yyyy
 
-
-
-IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-	if  APIUses = ERROR
-		{
-		APIUses = 0
-		IniWrite, %APIUses%, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-		IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-		}
-
-
-
 ; NEWCPI
 global NewCPI
 
@@ -149,8 +137,8 @@ return
 
 
 GetAppID() {
-user := "Paperboy@knobbe.com"
-pass := "knobbedocket"
+user := "tyler.dickson@knobbe.com"
+pass := "cpi1"
 Page := ChromeInst.GetPage()
 CPIClientCode := Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_CaseNumber').value").Value
 CPIClientCode2 := Page.Evaluate("document.getElementById('ctl00_Detail_CaseNumber').value").Value
@@ -168,13 +156,12 @@ http.Send()
 while (http.Responsetext == "")
 	Sleep 100
 value := JSON.Load(http.Responsetext)
-gosub RecordAPIUses
 return % value.Table[1].appid
 }
 
 GetTmkID() {
-user := "Paperboy@knobbe.com"
-pass := "knobbedocket"
+user := "tyler.dickson@knobbe.com"
+pass := "cpi1"
 Page := ChromeInst.GetPage()
 CPIClientCode := Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_CaseNumber').value").Value
 CPIClientCode2 := Page.Evaluate("document.getElementById('ctl00_Detail_CaseNumber').value").Value
@@ -192,7 +179,6 @@ http.Send()
 while (http.Responsetext == "")
 	Sleep 100
 value := JSON.Load(http.Responsetext)
-gosub RecordAPIUses
 return % value.Table[1].tmkId
 }
 
@@ -1272,11 +1258,6 @@ class Chrome
 	}
 }
 
-RecordAPIUses:	
-IniRead, APIUses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
-APIUses++
-IniWrite, %APIUses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
-return	
 
 
 

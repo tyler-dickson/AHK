@@ -4,327 +4,106 @@
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-#SingleInstance, Force
+#SingleInstance Force
 Enabled := ComObjError(false)
-Menu, Tray, Icon, Shell32.dll, 23
+Menu, Tray, Icon, mmcndmgr.dll , 60
 
-global CleanedApps := ""
-global CurrentRows
+NewCPI = 0
 
-TrayTip, Windows + D to grab apps., Windows + D to grab apps.
-return
+global Computername
 
-#d::
-CleanedApps := ""
-Clipboard := ""
-Sleep 500
-SendInput ^c
-ClipWait, 2
-
-StringSplit, AllApps, Clipboard, `r`n
-
-Loop %AllApps0%
+StringSplit, FirstName, A_Username, . ,
+Loop, Files, C:/Users/%FirstName1%.*, D
 {
-if (AllApps%A_Index% != " ") && (AllApps%A_Index% != "") && (AllApps%A_Index% != "     ")
-	{
-	;MsgBox, % "|" AllApps%A_Index% "|"
-	
-	Temp := AllApps%A_Index%
-	
-	if (CleanedApps == "")
-		CleanedApps := Temp
-	else
-		CleanedApps := CleanedApps "`n" Temp
-	}
+UserFolder = %A_LoopFileName%
 }
 
-StringReplace, CleanedApps, CleanedApps, % "App " , , A
-
-formattime, Today, , MMddyy          ; yyyy-MM-dd
-Gui, New, , Check for Existing Possible Oppositions (New CPI)
-Gui, Add, Edit, Center x10 y55 w150 h400 gBackEnd vBackEnd, %CleanedApps%		
-Gui, Font
-Gui, Add, Edit, Center x10 y25 w130 ReadOnly vNumberOfCodes , 0
-Gui, Font, s11 
-Gui, Add, Text, Center x10 y5 w130, Client Code Count:
-Gui, Add, ListView, x165 y55 w600 h400 Checked Right Grid vLoadedFiles , App Number|Found?           ; gCheckRowClick                                               |Due Date         |Date Taken
-Gui, Add, Button, x165 y25 w200 h22 gNewCPIGrabTMData, Check For Existing Poss Opps
-gosub BackEnd
-Gui, Show, w775
-return
-
-BackEnd:
-GuiControlGet, Edit1Status, , Edit1
-StringSplit, Edit1Status, Edit1Status, `n, 
-GuiControl, , Edit2, %Edit1Status0%
-
-LV_Delete()
-Loop %Edit1Status0%
-{
-LV_Add("", Edit1Status%A_Index%, "Click button to search records.", "--", "--")
-LV_ModifyCol(1, "AutoHdr")
-}
-
-return
-
-Append:
-Gui, Submit, NoHide
-StringSplit, BackEnd, BackEnd, `n, , 
-; LV_Delete()
-Sleep 1000
-AppNumber = 1
-
-Loop %BackEnd0%
-{
-LV_Modify(A_Index, "-Check", Edit1Status%A_Index%, "Pending search in 000Z...", "--", "--")
-LV_ModifyCol(1, "AutoHdr")
-}
-
-
-Loop %BackEnd0%
-{
-LV_Modify(AppNumber, "", Edit1Status%AppNumber%, "Searching 000Z for " Edit1Status%AppNumber%, "--", "--")
-Info := ""
-BaseNumber := ""
-Var2 := ie.document.GetElementsByTagName("TD").length
-
-Loop %Var2%
-	{
-	NewInfo := ie.document.GetElementsByTagName("TD")[A_Index-1].InnerText
-	NewInfoLength := StrLen(NewInfo)
-
-	if (NewInfoLength < 100)
-		{
-		ifinstring, NewInfo, % BackEnd%AppNumber%
-			{
-			BaseNumber := A_Index - 1
-			Action1 := ie.document.GetElementsByTagName("TD")[BaseNumber].InnerText
-			Action2 := ie.document.GetElementsByTagName("TD")[BaseNumber + 1].InnerText
-			Action4 := ie.document.GetElementsByTagName("TD")[BaseNumber + 3].InnerText
-			LV_Modify(AppNumber, "Check", BackEnd%AppNumber%, Action1, Action2, Action4)
-			AppNumber++
-			break
-			}
-		}
-	}
-	
-	if (BaseNumber == "")
-		{
-		Action1 := "Not on 000Z! Double-click to check for ZT."
-		Action2 := "--"
-		Action4 := "--"
-		LV_Modify(AppNumber, "", BackEnd%AppNumber%, Action1, Action2, Action4)
-		Sleep 250
-		;gosub CheckRow
-		AppNumber++
-		}
-		LV_ModifyCol(A_Index, "AutoHdr")
-}
-return
-
-/*
-CheckRowClick:
-if (A_GuiEvent == "DoubleClick")
-	CurrentRows := A_EventInfo
+if A_Username = UserFolder 
+	Computername := A_Username
 else
-	return
-
-LV_GetText(AppNoSearch, A_EventInfo , 1)
-
-Action1 := "Checking for a ZT record..."
-Action2 := "--"
-Action4 := "--"
-LV_Modify(CurrentRows, "", AppNoSearch, Action1, Action2, Action4)
-
-Sleep, 1000
-OutputVar := "http://oc-docketing/CPi/tmkschActionDue.aspx"
-ie2.Navigate(OutputVar)
-Sleep 1500
-ie2.Document.All.schstrActionDue_TextBox.Value := "*" AppNoSearch "*"
-Sleep 1500
-
-Loop 25
-{
-if (ie2.Document.All.schstrActionDue_TextBox.Value == "")
-	Sleep 250
-else
-	break
-}
-ie2.Document.All.btnStartSearch.Click()
-Sleep 1500
-
-Loop 25
-{
-FoundClientCode := ie2.Document.All.fldstrCaseNumber_TextBox.Value
-;MsgBox, %FoundClientCode%
-	if (FoundClientCode == "")
-		Sleep 150
-	else
-		{
-		LV_Modify(A_EventInfo,"Check" ,AppNoSearch, "Found on " FoundClientCode, "OK", "OK")
-		LV_ModifyCol(2, "AutoHdr")
-		break
-		}
-}
+	Computername := UserFolder	
 	
-if (FoundClientCode == "")
+IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
+if  APIUses = ERROR
 	{
-	Action1 := "Still not found! Checking one more thing..."
-	Action2 := "-"
-	Action4 := "-"
-	LV_Modify(A_EventInfo, ,AppNoSearch, Action1, Action2, Action4)
-	LV_ModifyCol(2, "AutoHdr")
-	Sleep 2000
-	
-		Loop 10
-			{
-			AS := ie2.document.GetElementsBytagname("A").length
-				if AS = 0 
-					Sleep 250
-				else
-					break
-			}
-		
-		Sleep 1000
-		
-		Loop %AS%
-		{
-		TempAction := ie2.document.GetElementsBytagname("A")[A_Index-1].InnerText
-			ifinstring, TempAction, ZT
-				{
-				TempAction := Trim(TempAction)
-				LV_Modify(A_EventInfo,"Check" ,AppNoSearch, "Found on " TempAction, "OK", "OK")
-				LV_ModifyCol(2, "AutoHdr")
-				return
-				}
-		}
-	LV_Modify(A_EventInfo,  ,AppNoSearch, "Still didn't find it. Go ahead and docket it.", "--", "--")
-	LV_ModifyCol(2, "AutoHdr")	
-
-	;Var2 := ie.document.GetElementsByTagName("TD").length
-
-	/*
-	Loop %Var2%
-		{
-		NewInfo := ie.document.GetElementsByTagName("TD")[A_Index-1].InnerText
-		NewInfoLength := StrLen(NewInfo)
-
-		if (NewInfoLength < 100)
-			{
-			ifinstring, NewInfo, %AppNoSearch%
-				{
-				BaseNumber := A_Index - 1
-				Action1 := ie.document.GetElementsByTagName("TD")[BaseNumber].InnerText
-				Action2 := ie.document.GetElementsByTagName("TD")[BaseNumber + 1].InnerText
-				Action4 := ie.document.GetElementsByTagName("TD")[BaseNumber + 3].InnerText
-				LV_Modify(A_EventInfo,"Check" ,AppNoSearch, Action1, Action2, Action4)
-				break
-				}
-			}
-		}
-	*/
-	; }
- return
-
-*/
-
-CheckRow:
-CurrentRows := LV_GetCount()
-AppNoSearch := BackEnd%CurrentRows%
-Sleep, 1000
-OutputVar := "http://oc-docketing/CPi/tmkschActionDue.aspx"
-ie2.Navigate(OutputVar)
-Sleep 500
-ie2.Document.All.schstrActionDue_TextBox.Value := "*" AppNoSearch "*"
-Sleep 1500
-ie2.Document.All.btnStartSearch.Click()
-while ie.busy or ie.ReadyState != 4 ;Wait for page to load
-	Sleep, 100
-
-Loop 8
-{
-FoundClientCode := ie2.Document.All.fldstrCaseNumber_TextBox.Value
-	if (FoundClientCode != "")
-		break
-	else
-		Sleep 250
-}	
-	
-if (FoundClientCode != "")
-	{
-	LV_Modify(LV_GetCount(),"Check" ,AppNoSearch, "Found on " FoundClientCode, "OK", "OK")
-	LV_ModifyCol(2, "AutoHdr")
-	return
+	APIUses = 0
+	IniWrite, %APIUses%, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
+	IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
 	}
-else
-	{
-	Action1 := "Still not found! Checking one more thing..."
-	Action2 := "-"
-	Action4 := "-"
-	LV_Modify(LV_GetCount(), ,AppNoSearch, Action1, Action2, Action4)
-	LV_ModifyCol(2, "AutoHdr")
-	
-		Loop 8
-			{
-			AS := ie2.document.GetElementsBytagname("A").length
-				if AS = 0 
-					Sleep 250
-				else
-					break
-			}
 
-		Loop %AS%
-		{
-		TempAction := ie2.document.GetElementsBytagname("A")[A_Index-1].InnerText
-			ifinstring, TempAction, ZT
-				{
-				TempAction := Trim(TempAction)
-				LV_Modify(LV_GetCount(),"Check" ,AppNoSearch, "Found on " TempAction, "OK", "OK")
-				LV_ModifyCol(2, "AutoHdr")
-				return
-				}
-		}
-	LV_Modify(LV_GetCount(),  ,AppNoSearch, "Unable to locate in 000Z or ZTCN.", "--", "--")
-	LV_ModifyCol(2, "AutoHdr")			
-	}
+
+Gui, New,  ToolWindow AlwaysOnTop, Batch Action Update Data Grab (New CPI)
+Gui, Font, bold s14
+Gui, Add, Text, 	x5 		y5 w225 Center, Earliest Date
+Gui, Add, MonthCal, vDateRange1 xp yp+25, 20210815 ; 20210101
+Gui, Add, Text, 	xp+230 	y5 w225 Center, Latest Date
+Gui, Add, MonthCal, vDateRange2 xp yp+25,
+Gui, Font, 
+Gui, Font, s8
+Gui, Add, Radio, vActionSelection 	x5 , Exam Desk
+Gui, Add, Radio,					xp yp+17 , *IntFees
+Gui, Add, Radio, 					xp yp+17 , Reminders
+Gui, Add, Radio, 					xp yp+17 , *Abandonment
+Gui, Add, Radio, 					xp yp+17 , Other
+Gui, Add, Edit, vOtherAction w225 	   yp+17, 
+Gui, Font, bold s14
+Gui, Add, Button, gNewCPIGrabPatentData x5 w225, Grab Patent Data
+Gui, Add, Button, gNewCPIGrabTMData xp+230 w225 yp, Grab Trademark Data
+Gui, Show, w465
 return
 
 GuiClose:
 ExitApp
 return
 
-NewCPIGrabTMData:
+NewCPIGrabPatentData:
 Gui, Submit, NoHide
-StringSplit, BackEnd, BackEnd, `n, , 
+FormatTime, DateRange1, % DateRange1, MM/dd/yyyy
+FormatTime, DateRange2, % DateRange2, MM/dd/yyyy
 
-Loop %BackEnd0%
-{
-	LV_Modify(A_Index, "-Check", Edit1Status%A_Index%, "Pending search in 000Z...", "--", "--")
-	LV_ModifyCol(1, "AutoHdr")
-}
-
+if (ActionSelection == 1)
+	{
+	SearchCriteria := "%Exam Desk%"
+	Countries := "'US', 'WO'"
+	}
+else if (ActionSelection == 2)
+	{
+	SearchCriteria := "%IntFees%"
+	Countries := "'US', 'WO'"	
+	}
+else if (ActionSelection == 3)
+	{
+	SearchCriteria := "%Rem%"
+	Countries := "'US'"	
+	}
+else if (ActionSelection == 4)
+	{
+	SearchCriteria := "%*Abandonment%"
+	Countries := "'US', 'WO'"
+	}
+else if (ActionSelection == 5)
+	{
+	SearchCriteria := "%" OtherAction "%"
+	Countries := "'US'"	
+	}
+	
 value := ""
-user := "tyler.dickson@knobbe.com"
-pass := "cpi1"
+user := "Paperboy@knobbe.com"
+pass := "knobbedocket"
 EndPoint1 := "https://web05.computerpackages.com/knobbews/api/Knobbe?queryString="
+
 EndPoint2 = 
 (
-SELECT CaseNumber, ActionType, BaseDate, ResponseDate %A_Space%
-FROM tblTmkActionDue  %A_Space%
-WHERE %A_Space%
+SELECT t2.CaseNumber, t2.Country, t2.SubCase, t2.ActionType, t3.ActionDue, t2.BaseDate, t2.ResponseDate, t3.DueDate, t3.DateTaken, t3.Indicator, t2.AppId, t3.ActId %A_Space%
+FROM tblPatCountryApplication t1 %A_Space%
+INNER JOIN tblPatActionDue t2 ON t1.AppId = t2.AppId %A_Space%
+INNER JOIN tblPatDueDate t3 ON t2.ActId = t3.ActId %A_Space%
+WHERE t1.Country NOT IN(%Countries%) AND t3.DateTaken IS NULL AND t3.ActionDue LIKE '%SearchCriteria%' AND %A_Space%
 )
 
-Loop %BackEnd0%
-{
-EndPoint3 := " ActionType LIKE '%(" BackEnd%A_Index% ")%'"
+; WHERE t1.Country NOT IN('US') AND t3.DateTaken IS NULL AND t3.ActionDue LIKE '`%Exam Desk`%' AND %A_Space%
 
-/*
-
-42777803
-40911230
-40911231
-
-*/
+EndPoint3 := " t3.DueDate BETWEEN cast('" DateRange1 "' as date) AND cast('" DateRange2 "' as date) ORDER BY t1.CaseNumber"
 
 http := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 http.Open("GET", EndPoint1 . EndPoint2 . EndPoint3, true)
@@ -338,22 +117,114 @@ value := JSON.Load(http.Responsetext)
 ; MsgBox, % http.Responsetext
 ; MsgBox, % value.Table.length()
 
-if (value.Table.length() == 1)
+gosub RecordAPIUses
+
+WinActivate, ahk_exe EXCEL.EXE
+global offset = 2
+xl := ComObjActive("Excel.Application")
+Loop % value.Table.length()
 	{
-	LV_Modify(A_Index,"Check" , Edit1Status%A_Index%, "Found on " value.Table[1].CaseNumber, value.Table[1].BaseDate, value.Table[1].ResponseDate)
-	LV_ModifyCol(2, "AutoHdr")
+	xl.Range("A" . offset).Select
+	Clipboard := value.Table[A_Index].CaseNumber "`t" 		value.Table[A_Index].Country "`t" 		value.Table[A_Index].SubCase "`t"	value.Table[A_Index].ActionType "`t"		value.Table[A_Index].ActionDue "`t"		value.Table[A_Index].BaseDate "`t"		value.Table[A_Index].ResponseDate "`t"		value.Table[A_Index].DueDate "`t"		value.Table[A_Index].DateTaken "`t"		value.Table[A_Index].Indicator "`t"	value.Table[A_Index].ActId "`t"	value.Table[A_Index].AppId 
+	ClipWait, 0.5, 0
+	xl.ActiveSheet.Paste
+	if (xl.Range("A" . offset).Value == "")
+		{
+		Sleep 150
+		xl.ActiveSheet.Paste
+		}
+	offset++		
+	Gui, Show, NoActivate, % A_Index " / " value.Table.length()
 	}
-else if (value.Table.length() > 1)
+MsgBox, And we're done!
+Gui, Show, NoActivate, Batch Action Update Data Grab (New CPI)
+return
+
+NewCPIGrabTMData:
+Gui, Submit, NoHide
+StringSplit, DateRange, DateRange, -
+FormatTime, DateRange1, % DateRange1, MM/dd/yyyy
+FormatTime, DateRange2, % DateRange2, MM/dd/yyyy
+	
+if (ActionSelection == 1)
 	{
-	LV_Modify(A_Index,"Check" , Edit1Status%A_Index%, "Multiple hits? That's weird." , "--", "--")
-	LV_ModifyCol(2, "AutoHdr")
+	SearchCriteria := "%Exam Desk%"
+	Countries := "'US', 'WO'"
 	}
-else
+else if (ActionSelection == 2)
 	{
-	LV_Modify(A_Index,  , Edit1Status%A_Index%, "Unable to locate in 000Z or ZTCN.", "--", "--")
-	LV_ModifyCol(2, "AutoHdr")			
+	SearchCriteria := "%IntFees%"
+	Countries := "'US', 'WO'"	
 	}
-}
+else if (ActionSelection == 3)
+	{
+	SearchCriteria := "%Rem%"
+	Countries := "'US'"	
+	}
+else if (ActionSelection == 4)
+	{
+	SearchCriteria := "%Abandonment%"
+	Countries := "'US'"	
+	}
+else if (ActionSelection == 5)
+	{
+	SearchCriteria := "%" OtherAction "%"
+	Countries := "'US'"	
+	}
+
+Gui, Show, NoActivate, Batch Action Update Data Grab (New CPI) - Grabbing Trademark Data for %DateRange1% through %DateRange2%...
+
+value := ""
+user := "Paperboy@knobbe.com"
+pass := "knobbedocket"
+EndPoint1 := "https://web05.computerpackages.com/knobbews/api/Knobbe?queryString="
+
+EndPoint2 = 
+(
+SELECT t1.CaseNumber, t1.TmkId, t1.Country, t2.ActId, t2.TmkId, t2.ResponseDate, t2.ActionType, t3.DueDate, t3.ActionDue, t3.Indicator, t3.DateTaken %A_Space%
+FROM tblTmkTrademark t1 %A_Space%
+INNER JOIN tblTmkActionDue t2 ON t1.TmkId = t2.TmkId %A_Space%
+INNER JOIN tblTmkDueDate t3 ON t2.ActId = t3.ActId %A_Space%
+LEFT JOIN tblTmkAttorney t5 ON t1.TmkId = t5.TmkId %A_Space%
+WHERE t1.Country NOT IN('%Countries%') AND t3.DateTaken IS NULL AND t3.ActionDue LIKE '%SearchCriteria%' AND %A_Space%
+)
+
+EndPoint3 := " t3.DueDate BETWEEN cast('" DateRange1 "' as date) AND cast('" DateRange2 "' as date) ORDER BY t1.CaseNumber"
+
+http := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+http.Open("GET", EndPoint1 . EndPoint2 . EndPoint3, true)
+http.SetRequestHeader("Authorization", "Basic "  Base64Encode(user ":" pass) )
+http.Send()
+
+while (http.Responsetext == "")
+	Sleep 100
+
+value := JSON.Load(http.Responsetext)
+gosub RecordAPIUses
+
+; MsgBox, % http.Responsetext
+; MsgBox, % value.Table.length()
+
+
+WinActivate, ahk_exe EXCEL.EXE
+global offset = 2
+xl := ComObjActive("Excel.Application")
+Loop % value.Table.length()
+	{
+	xl.Range("A" . offset).Select
+	Clipboard := value.Table[A_Index].CaseNumber "`t" 		value.Table[A_Index].Country "`t" 		value.Table[A_Index].SubCase "`t"	value.Table[A_Index].ActionType "`t"		value.Table[A_Index].ActionDue "`t"		value.Table[A_Index].BaseDate "`t"		value.Table[A_Index].ResponseDate "`t"		value.Table[A_Index].DueDate "`t"		value.Table[A_Index].DateTaken "`t"		value.Table[A_Index].Indicator "`t"	value.Table[A_Index].ActId "`t"	value.Table[A_Index].TmkId 
+	ClipWait, 0.5, 0
+	xl.ActiveSheet.Paste
+	if (xl.Range("A" . offset).Value == "")
+		{
+		Sleep 150
+		xl.ActiveSheet.Paste
+		}
+	offset++		
+	Gui, Show, NoActivate, % A_Index " / " value.Table.length()
+	}
+MsgBox, And we're done!
+Gui, Show, NoActivate, Batch Action Update Data Grab (New CPI)
 return
 
 Base64Encode(String) ;by Uberi @ https://autohotkey.com/board/topic/5545-base64-coderdecoder/page-3#entry690930
@@ -764,3 +635,10 @@ class JSON
 		}
 	}
 }
+
+RecordAPIUses:	
+IniRead, APIUses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
+APIUses++
+IniWrite, %APIUses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
+return	
+

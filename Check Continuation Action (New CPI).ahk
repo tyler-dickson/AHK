@@ -39,8 +39,8 @@ Loop % BackEnd.Length()
 	}
 LV_Delete()
 
-user := "Paperboy@knobbe.com"
-pass := "knobbedocket"
+user := "tyler.dickson@knobbe.com"
+pass := "cpi1"
 EndPoint1 := "https://web05.computerpackages.com/knobbews/api/Knobbe?queryString="
 EndPoint2 = SELECT tblPatCountryApplication.CaseNumber, tblPatDueDate.DueDate, tblPatDueDate.ActionDue, tblPatDueDate.DateTaken FROM tblPatCountryApplication INNER JOIN tblPatActionDue ON tblPatCountryApplication.AppId = tblPatActionDue.AppId INNER JOIN tblPatDueDate ON tblPatActionDue.ActId = tblPatDueDate.ActId LEFT JOIN tblPatInvention ON tblPatCountryApplication.InvId = tblPatInvention.InvId
 EndPoint3 := " WHERE tblPatDueDate.ActionDue = 'File Continuing Application? Patent to Issue' AND tblPatCountryApplication.CaseNumber IN (" ListOfClientCodes ")"

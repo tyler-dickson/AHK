@@ -1,344 +1,6 @@
-﻿; Created with AutoHotkey by Tyler Dickson.   
-
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-#SingleInstance, Force
-#Persistent
-Enabled := ComObjError(false)
-SysGet, ScreenWidth, 78
-SysGet, ScreenHeight, 79
-global HalfScreenHeight := ScreenHeight * .50       ;964.8
-;DetectHiddenWindows, On  
-SetTitleMatchMode, 2
-Menu, Tray, Icon, compstui.dll , 94
-
-; NEWCPI
-global NewCPI
-
-NewCPI = 1
-
-if (NewCPI)
-	{
-;	#Include \\docs-oc\files\Docketing\AutoHotKey\Scripts\Chrome.ahk
-;	FileCreateDir, C:\Users\Tyler.Dickson\Desktop\AHK Startup\ChromeProfile
-;	FileCreateDir, ChromeProfile
-	FileCreateShortcut, % "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", %A_Desktop%\Chrome (AHK).lnk, , % "--remote-debugging-port=9222 -- '%1'", % "Test Description" ;,  IconFile, 
-
-;	Run, %A_Desktop%\Chrome (AHK).lnk
-	
-	if (Chromes := Chrome.FindInstances())
-		global ChromeInst := {"base": Chrome, "DebugPort": Chromes.MinIndex()}
-	else
-		global ChromeInst := new Chrome("ChromeProfile", "https://web05.computerpackages.com/knobbe/patent/patschcountryapplication.aspx" ) ; 	;	global ChromeInst := new Chrome("ChromeProfile", "--app=http://oc-docketing/CPi/patfrmCountryApplication.aspx?Key=1275806")
-	
-	global Page := ChromeInst.GetPage()
-;	Page.Call("Page.navigate", {"url" : "https://web05.computerpackages.com/knobbe/patent/patschcountryapplication.aspx" })
-;	Page.Call("Target.createTarget", {"url" : "https://web05bak.computerpackages.com/knobbeAgent/patent/patschcountryapplication.aspx" })
-	Page.WaitForLoad()
-	Page.Disconnect()
-	}
-
-
-global ComputerName
-
-StringSplit, FirstName, A_Username, . ,
-Loop, Files, C:/Users/%FirstName1%.*, D
-{
-UserFolder = %A_LoopFileName%
-}
-
-if A_Username = UserFolder 
-	Computername := A_Username
-else
-	Computername := UserFolder	
-	
-IfNotExist,C:\Users\%Computername%\CustomFKeys.ini
-	{
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point6
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point8
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point9
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F1point10
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point6
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point8
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point9
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F2point10
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point6
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point8
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point9
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F3point10
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point6	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point7	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point8	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point9	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F4point10	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point6
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point8
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point9
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F5point10
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point6
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point8
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point9
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F6point10
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point6
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point8
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point9
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F7point10
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point6
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point8
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point9
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F8point10
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point6	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point7	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point8	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point9	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F9point10	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point6	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point8	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point9	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F10point10	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point6	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point7	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point8	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point9	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F11point10	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point1
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point2
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point3
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point4
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point5
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point6	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point7
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point8	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point9	
-	IniWrite, % "", C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, F12point10	
-	}
-	
-;IniRead, Uses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, FKeysInjector
-;	if Uses = ERROR
-;		IniWrite, 1, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, FKeysInjector
-;	else
-;		{
-;		Uses++
-;		IniWrite, %Uses%, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, FKeysInjector
-;		}
-	
-MsgBox, , F-Keys Action Injector, Welcome to the F-Keys Action Injector!`n`nHold the Windows key and press F1 to customize your keys.`n`nIf the first option is blank, the F-Key will function normally.`n`nEach press of an F-Key will cycle to the next option. Once you reach the end (or a blank entry), it will cycle back to the beginning.`n`nIf you leave blanks in between selections, it will never cycle to the later options.
-	
-return
-
-#F1::
-Gui, Destroy
-Gui, New, , Customize F-Keys
-Gui, Add, DropDownList, Center vCustomKey gCustomKey x5 y5 w180, F1||F2|F3|F4|F5|F6|F7|F8|F9|F10|F11|F12
-Gui, Add, Edit, Center vChoice1 x5 y30 w180, 
-Gui, Add, Edit, Center vChoice2 x5 yp+25 w180, 
-Gui, Add, Edit, Center vChoice3 x5 yp+25 w180, 
-Gui, Add, Edit, Center vChoice4 x5 yp+25 w180, 
-Gui, Add, Edit, Center vChoice5 x5 yp+25 w180, 
-Gui, Add, Edit, Center vChoice6 x5 yp+25 w180, 
-Gui, Add, Edit, Center vChoice7 x5 yp+25 w180, 
-Gui, Add, Edit, Center vChoice8 x5 yp+25 w180, 
-Gui, Add, Edit, Center vChoice9 x5 yp+25 w180, 
-Gui, Add, Edit, Center vChoice10 x5 yp+25 w180, 
-Gui, Add, Button, gSubmitCustomKeys x5 yp+25, Customize
-Gui, Add, Button, gCancelChanges x118 yp, Close Menu
-Gui, Show, w190
-gosub CustomKey
-return
-
-CancelChanges:
-Gui, Destroy
-return
-
-CustomKey:
-Gui, Submit, NoHide
-IniRead, Choice1, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point1
-IniRead, Choice2, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point2
-IniRead, Choice3, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point3
-IniRead, Choice4, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point4
-IniRead, Choice5, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point5
-IniRead, Choice6, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point6
-IniRead, Choice7, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point7
-IniRead, Choice8, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point8
-IniRead, Choice9, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point9
-IniRead, Choice10, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point10
-GuiControl, , Edit1, %Choice1%
-GuiControl, , Edit2, %Choice2%
-GuiControl, , Edit3, %Choice3%
-GuiControl, , Edit4, %Choice4%
-GuiControl, , Edit5, %Choice5%
-GuiControl, , Edit6, %Choice6%
-GuiControl, , Edit7, %Choice7%
-GuiControl, , Edit8, %Choice8%
-GuiControl, , Edit9, %Choice9%
-GuiControl, , Edit10, %Choice10%
-return
-
-SubmitCustomKeys:
-Gui, Submit, NoHide
-IniWrite, %Choice1%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point1
-IniWrite, %Choice2%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point2
-IniWrite, %Choice3%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point3
-IniWrite, %Choice4%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point4
-IniWrite, %Choice5%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point5
-IniWrite, %Choice6%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point6
-IniWrite, %Choice7%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point7
-IniWrite, %Choice8%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point8
-IniWrite, %Choice9%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point9
-IniWrite, %Choice10%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %CustomKey%point10
-MsgBox, , Shortcuts updated!, Shortcuts have been updated for this key.
-return
-
-$F1::
-$F2::
-$F3::
-$F4::
-$F5::
-$F6::
-$F7::
-$F8::
-$F9::
-$F10::
-$F11::
-$F12::
-PressedKey := StrReplace(A_ThisHotKey, "$", "")
-Loop 10
-	IniRead, %PressedKey%point%A_Index%, C:\Users\%Computername%\CustomFKeys.ini, CustomFKeys, %PressedKey%point%A_Index%
-
-if %PressedKey%point1 = 
-	{
-	Send {%PressedKey%}
-	return
-	}
-else
-	{
-	Page := ChromeInst.GetPage()
-	ActionType := Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_ActionType_Input').value").Value
-	Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_ActionType_Input').value = '';")
-		
-	Temp1  := %PressedKey%point1  ; " "
-	Temp2  := %PressedKey%point2  ; " "
-	Temp3  := %PressedKey%point3  ; " "
-	Temp4  := %PressedKey%point4  ; " "
-	Temp5  := %PressedKey%point5  ; " "
-	Temp6  := %PressedKey%point6  ; " "
-	Temp7  := %PressedKey%point7  ; " "
-	Temp8  := %PressedKey%point8  ; " "
-	Temp9  := %PressedKey%point9  ; " "
-	Temp10 := %PressedKey%point10 ; " "
-
-	
-	if (ActionType == " ")
-		CPIInjectAction(Temp1)	
-	else if InStr(ActionType, Temp1)
-		CPIInjectAction(Temp2)
-	else if InStr(ActionType, Temp2)
-		CPIInjectAction(Temp3)
-	else if InStr(ActionType, Temp3)
-		CPIInjectAction(Temp4)
-	else if InStr(ActionType, Temp4)
-		CPIInjectAction(Temp5)
-	else if InStr(ActionType, Temp5)
-		CPIInjectAction(Temp6)
-	else if InStr(ActionType, Temp6)
-		CPIInjectAction(Temp7)
-	else if InStr(ActionType, Temp7)
-		CPIInjectAction(Temp8)
-	else if InStr(ActionType, Temp8)
-		CPIInjectAction(Temp9)
-	else if InStr(ActionType, Temp9)
-		CPIInjectAction(Temp10)
-	else if InStr(ActionType, Temp10)
-		CPIInjectAction(Temp1)
-	else if (ActionType != Temp1) || (ActionType != Temp2) || (ActionType != Temp3) || (ActionType != Temp4) || (ActionType != Temp5)|| (ActionType != Temp6) || (ActionType != Temp7) || (ActionType != Temp8) || (ActionType != Temp9) || (ActionType != Temp10)
-		CPIInjectAction(Temp1)	
-		
-	return
-	}
-return
-
-
-CPIInjectAction(ActionType2) { 
-	Page.Disconnect()
-	Page := ChromeInst.GetPage()
-
-	Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_ActionType_Input').value = '" ActionType2 "';")
-	WinActivate, ahk_exe chrome.exe
-
-	Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_ActionType_Input').focus()")
-	SendInput, {Right}
-	Sleep 100
-	SendInput, {Space}
-	Sleep 100
-	SendInput, {Tab}
-	Page.Disconnect()
-	return
-}
+﻿; Chrome.ahk v1.2
+; Copyright GeekDude 2018
+; https://github.com/G33kDude/Chrome.ahk
 
 class Chrome
 {
@@ -381,13 +43,13 @@ class Chrome
 			ChromeInst := new Chrome(ProfilePath)
 		```
 	*/
-	FindInstances()
+	FindInstances(ProcessName:="chrome.exe") ; chrome = chrome.exe | edge = msEdge.exe
 	{
 		static Needle := "--remote-debugging-port=(\d+)"
 		Out := {}
 		for Item in ComObjGet("winmgmts:")
 			.ExecQuery("SELECT CommandLine FROM Win32_Process"
-			. " WHERE Name = 'chrome.exe'")
+			. " WHERE Name = '" . ProcessName . "'")
 			if RegExMatch(Item.CommandLine, Needle, Match)
 				Out[Match1] := Item.CommandLine
 		return Out.MaxIndex() ? Out : False
@@ -564,11 +226,8 @@ class Chrome
 		*/
 		Call(DomainAndMethod, Params:="", WaitForResponse:=True)
 		{
-			;if !this.Connected
-			;	throw Exception("Not connected to tab")
-			
-			;;;;; MAYBE TURN BACK ON LATER I DUNNO
-			
+			if !this.Connected
+				throw Exception("Not connected to tab")
 			
 			; Use a temporary variable for ID in case more calls are made
 			; before we receive a response.
@@ -614,11 +273,8 @@ class Chrome
 			}
 			))
 			
-			; if (response.exceptionDetails)
-			;	throw Exception(response.result.description,, Chrome.Jxon_Dump(response.exceptionDetails))
-			
-						
-			;;;;; MAYBE TURN BACK ON LATER I DUNNO
+			if (response.exceptionDetails)
+				; throw Exception(response.result.description,, Chrome.Jxon_Dump(response.exceptionDetails))
 			
 			return response.result
 		}
@@ -670,10 +326,7 @@ class Chrome
 			}
 			else if (EventName == "Error")
 			{
-				; throw Exception("Websocket Error!")
-				
-							
-			;;;;; MAYBE TURN BACK ON LATER I DUNNO
+				throw Exception("Websocket Error!")
 			}
 		}
 		
@@ -711,7 +364,6 @@ class Chrome
 				Gui, Add, ActiveX, vWB, Shell.Explorer
 				Gui, %hOld%: Default
 				
-
 				; Write an appropriate document
 				WB.Navigate("about:<!DOCTYPE html><meta http-equiv='X-UA-Compatible'"
 				. "content='IE=edge'><body></body>")
@@ -1001,4 +653,3 @@ class Chrome
 		return obj
 	}
 }
-

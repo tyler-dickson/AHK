@@ -8,6 +8,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 Enabled := ComObjError(false)
 Menu, Tray, Icon, mmcndmgr.dll , 60
 
+NewCPI = 0
+
 global Computername
 
 StringSplit, FirstName, A_Username, . ,
@@ -28,6 +30,7 @@ if  APIUses = ERROR
 	IniWrite, %APIUses%, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
 	IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
 	}
+
 
 Gui, New,  ToolWindow AlwaysOnTop, IntFees`, ABA Data Grab (New CPI)
 Gui, Font, bold s14

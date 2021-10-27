@@ -25,6 +25,7 @@ else
 	Computername := UserFolder
 
 IniRead, Username, C:\Users\%Computername%\AHKPrefs.ini, Username, Username
+
 	
 Sleep 500
 IniRead, Username, C:\Users\%Computername%\AHKPrefs.ini, Username, Username
@@ -32,16 +33,7 @@ IniRead, RespAtty, C:\Users\%Computername%\AHKPrefs.ini, Username, RespAtty
 
 if RespAtty = ERROR
 	RespAtty := ""
-
-
-IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-	if  APIUses = ERROR
-		{
-		APIUses = 0
-		IniWrite, %APIUses%, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-		IniRead,  APIUses, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements,  APIUses
-		}
-
+	
 	
 ; NEWCPI
 global NewCPI
@@ -348,8 +340,8 @@ Gui, Submit, NoHide
 Page := ChromeInst.GetPage()
 
 value := ""
-user := "Paperboy@knobbe.com"
-pass := "knobbedocket"
+user := "tyler.dickson@knobbe.com"
+pass := "cpi1"
 EndPoint1 := "https://web05.computerpackages.com/knobbews/api/Knobbe?queryString="
 EndPoint2 = SELECT InvId FROM tblPatInvention WHERE CaseNumber
 
@@ -369,8 +361,6 @@ while (http.Responsetext == "")
 	Sleep 100
 
 value := JSON.Load(http.Responsetext)
-gosub RecordAPIUses
-
 Page.Call("Page.navigate", {"url" : "https://web05.computerpackages.com/knobbe/patent/patfrmInvention.aspx?key=" value.Table[1].InvId })
 Page.WaitForLoad()
 Page.Evaluate("document.getElementById('ctl00_Detail_EditButton_input').click();")
@@ -2973,8 +2963,8 @@ class JSON
 
 
 GetAppID() {
-user := "Paperboy@knobbe.com"
-pass := "knobbedocket"
+user := "tyler.dickson@knobbe.com"
+pass := "cpi1"
 Page := ChromeInst.GetPage()
 CPIClientCode := Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_CaseNumber').value").Value
 CPIClientCode2 := Page.Evaluate("document.getElementById('ctl00_Detail_CaseNumber').value").Value
@@ -2992,13 +2982,12 @@ http.Send()
 while (http.Responsetext == "")
 	Sleep 100
 value := JSON.Load(http.Responsetext)
-gosub RecordAPIUses
 return % value.Table[1].appid
 }
 
 GetTmkID() {
-user := "Paperboy@knobbe.com"
-pass := "knobbedocket"
+user := "tyler.dickson@knobbe.com"
+pass := "cpi1"
 Page := ChromeInst.GetPage()
 CPIClientCode := Page.Evaluate("document.getElementById('ctl00_Detail_tplFormview_CaseNumber').value").Value
 CPIClientCode2 := Page.Evaluate("document.getElementById('ctl00_Detail_CaseNumber').value").Value
@@ -3016,7 +3005,6 @@ http.Send()
 while (http.Responsetext == "")
 	Sleep 100
 value := JSON.Load(http.Responsetext)
-gosub RecordAPIUses
 return % value.Table[1].tmkId
 }
 
@@ -3060,9 +3048,3 @@ Page := ChromeInst.GetPage()
 Page.Call("Target.createTarget", {"url" : newURL })
 Page.Disconnect()
 }
-
-RecordAPIUses:	
-IniRead, APIUses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
-APIUses++
-IniWrite, %APIUses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, APIUses
-return	
