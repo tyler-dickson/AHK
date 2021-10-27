@@ -1,0 +1,159 @@
+OpenPopup('controls/ExportToCalendar.aspx?type=1&sys=0&key=19764685'
+OpenPopup('patfrmActDueDate.aspx?type=1&sys=0&key=19764685'
+OpenPopup('patfrmActDueDate.aspx?Key=9686728', '820px');
+'controls/ExportToCalendar.aspx?type=1&sys=0&key=19764685'
+http://oc-docketing/CPi/controls/ExportToCalendar.aspx?type=1&sys=0&key=19764685
+\\docs-oc\files\Docket\CPi\Database Documentation\OC-SQLMain\OC-SQLMain\User_databases\CpiPatent\Programmability\Stored_Procedures\Stored_Procedures.html
+http://oc-docketing/CPi/patfrmActionDue.aspx?key=9686728&bc=1&key2=1275806
+http://oc-docketing/CPi/patfrmActDueDate.aspx?key=9686728&bc=1&key2=1275806
+<A style="COLOR: black" href="javascript:__doPostBack('dgdMain$_ctl2$_ctl0','')"><IMG style= border=0 alt="Edit this record." src="images/button_edit.gif" a &gt<></A>
+
+
+
+SPAN 0 = Action Due Date (Top left corner)
+
+SPAN 1 = Also test	Action Due	dgdMain$_ctl2$_ctl0
+SPAN 2 = 02-May-2018	Due Date
+SPAN 3 = 03-May-2018	Date Taken
+SPAN 4 = <blank>	Face: checkbox
+SPAN 5 = Remarks	Remarks
+
+SPAN 6 = Test
+
+
+
+
+
+
+Gui, Submit, NoHide
+Checkboxes = %Option1%,%Checkboxes2%,%Checkboxes3%,%Checkboxes4%,%Checkboxes5%,%Checkboxes6%,%Checkboxes7%,%Checkboxes8%
+IniWrite, %Checkboxes%, C:\Users\%Computername%\AHKPrefs.ini, Username, Checkboxes
+SelectedDate := ie2.document.GetElementsBytagname("INPUT")[4].Value
+CurrentRemarks := ie2.document.GetElementsBytagname("TEXTAREA")[0].Value
+
+year  := SubStr(SelectedDate, 8,4)
+month := SubStr(SelectedDate, 4,3) 
+day   := SubStr(SelectedDate, 1,2)
+
+if month = Jan
+	newmonth := 01
+else if month = Feb
+	newmonth := 02
+else if month = Mar
+	newmonth := 03
+else if month = Apr
+	newmonth := 04
+else if month = May
+	newmonth := 05
+else if month = Jun
+	newmonth := 06
+else if month = Jul
+	newmonth := 07
+else if month = Aug
+	newmonth := 08
+else if month = Sep
+	newmonth := 09
+else if month = Oct
+	newmonth := 10
+else if month = Nov
+	newmonth := 11
+else if month = Dec
+	newmonth := 12
+
+formattedTime := year . newmonth . day
+formattedTime += 7, days
+FormatTime, formattedTime, %formattedTime%, dd-MMM-yyyy
+ie2.document.GetElementsBytagname("INPUT")[4].Value := formattedTime
+ExtendRemarks = %ATDate% Extend 1W per %RespAtty%. %Username% 
+
+if Option1 = 1
+	{
+	if (RespAtty != "") 
+		{
+		ie2.document.GetElementsBytagname("TEXTAREA")[0].Value := ExtendRemarks "`n" CurrentRemarks
+		gosub ClickSave
+		}
+	else
+		{
+		Gui +LastFound +OwnDialogs +AlwaysOnTop
+		WinGetPos, mX, mY, mW, mH, Docketing SuperEdit
+		InputBox, TempAtty, Who is the responsible attorney?, Please enter the responsible attorney., , 253, 131, mX + 375 , mY
+			ExtendRemarks = %ATDate% Extend 1W per %TempAtty%. %Username% 
+			if TempAtty = 
+				{
+				ie2.document.GetElementsBytagname("TEXTAREA")[0].Value := ExtendRemarks "`n" CurrentRemarks
+				}
+			else
+				{
+				ie2.document.GetElementsBytagname("TEXTAREA")[0].Value := ExtendRemarks "`n" CurrentRemarks		
+				gosub ClickSave
+				}
+		}
+	}
+else
+	{
+	gosub ClickSave	
+	}
+gosub RecordCalExtend
+return
+
+
+
+
+
+
+
+
+
+
+
+Gui, Submit, NoHide
+Checkboxes = %Option1%,%Checkboxes2%,%Checkboxes3%,%Checkboxes4%,%Checkboxes5%,%Checkboxes6%,%Checkboxes7%,%Checkboxes8%
+IniWrite, %Checkboxes%, C:\Users\%Computername%\AHKPrefs.ini, Username, Checkboxes
+
+MyMonthCal := ie2.document.GetElementsBytagname("INPUT")[4].Value
+CurrentRemarks := ie2.document.GetElementsBytagname("TEXTAREA")[0].Value
+
+year  := SubStr(MyMonthCal, 8,4)
+month := SubStr(MyMonthCal, 4,3) 
+day   := SubStr(MyMonthCal, 1,2)
+
+if month = Jan
+	newmonth := 01
+else if month = Feb
+	newmonth := 02
+else if month = Mar
+	newmonth := 03
+else if month = Apr
+	newmonth := 04
+else if month = May
+	newmonth := 05
+else if month = Jun
+	newmonth := 06
+else if month = Jul
+	newmonth := 07
+else if month = Aug
+	newmonth := 08
+else if month = Sep
+	newmonth := 09
+else if month = Oct
+	newmonth := 10
+else if month = Nov
+	newmonth := 11
+else if month = Dec
+	newmonth := 12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

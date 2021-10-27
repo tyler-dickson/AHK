@@ -3,92 +3,48 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 #SingleInstance, Force
-;				              Control + J to run GrabPeeps subroutine.
 formattime, Today, ,MM.dd.yyyy
-formattime, ThisHour, , htt
 Menu, Tray, Icon, ddores.dll , 52
 
-User1 = adriana.perez
-User2 = aimee.kazan
-User3 = Allyson.Roach
-User4 = angel.zehnder      
-User5 = anthony.bonilla
-User6 = anthony.pineda     
-User7 = Caitlyn.Wolfe
-User8 = Chelsea.Burdeno    ; or Chelsea.Veinot
-User9 = cher.lancaster     
-User10 = christina.graul
-User11 = Cynthia.Hupper
-User12 = daenna.thomas
-User13 = Daniela.lopez      
-User14 = Danika.Gregory
-User15 = daryl.gurden
-User16 = devin.vink
-User17 = diana.cruz
-User18 = doug.watson
-User19 = eddie.monroy       
-User20 = eric.olson
-User21 = gustavo.lopez
-User22 = heather.obrien     
-User23 = Heide.Young        
-User24 = Imran.Ahmed
-User25 = jacqueline.mendoza
-User26 = jason.finn         
-User27 = jennifer.daily
-User28 = jennifer.neat
-User29 = jessica.egigian     ; or maybe Jessica.George
-User30 = judy.buenrostro
-User31 = kealani.aguon
-User32 = kevin.kraus        
-User33 = lara.hamdan        ; or maybe lara.anabtawi      
-User34 = leah.ford
-User35 = Long.Dang          
-User36 = maya.gutierrez
-User37 = nathalie.driggers
-User38 = Neysa.perkins      ; or maybe Neysa.cabudol
-User39 = nick.lamb      
-User40 = paul.traska    
-User41 = shannon.burns
-User42 = tamara.dumas
-User43 = ThuyQuyen.Nguyen   
-User44 = tony.do
-User45 = tyler.dickson      
-User46 = valerie.jones
-User47 = xiomara.raymundo   
-User48 = zachary.galligan
-User49 = Arlene.Tjoarman
-User50 = Sabrina.Kellogg   ; or maybe Sabrina.Fleming
-User51 = Ashley.Reed
-User52 = Amy.Durrant
-User53 = zughey.salcido
-User54 = fabiola.esmerio
-User55 = sandra.autry
+global NumUsers = 0
 
-global TotalUsers = 55
-;                   Update this for Loops below.
-;                   When adding a new user, uncomment the next one, 
-;                   the corresponding gosub on Lines ~141.
-;                   and the subroutine Line ~303.
-;                   Uncomment the number of users in TotalUsers
+Loop, Files, \\docs-oc\files\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\*.ini, F
+{
+User%A_Index% = %A_LoopFileName%
+StringReplace, User%A_Index%, User%A_Index%, .ini, , 
+NumUsers++
+}
 
-Dropdown  = %User1%|%User2%|%User3%|%User4%|%User5%|%User6%|%User7%|%User8%|%User9%|%User10%|%User11%|%User12%|%User13%|%User14%|%User15%|%User16%|%User17%|%User18%|%User19%|%User20%|%User21%|%User22%|%User23%|%User24%|%User25%|%User26%|%User27%|%User28%|%User29%|%User30%|%User31%|%User32%|%User33%|%User34%|%User35%|%User36%|%User37%|%User38%|%User39%|%User40%|%User41%|%User42%|%User43%|%User44%|%User45%|%User46%|%User47%|%User48%|%User49%|%User50%|%User51%|%User52%|%User53%|%User54%|%User55%
-Dropdown2 = Keystrokes|DateShortcut|SysSwitch|ExcelHLink|CalExtend|CopyAction|PasteAction|SuggestRemarks|ClientCodeIE|AttyFinder|EFSCertFinder|EFSFill|EFSLogin|AHotCornerBL|AHotCornerTR|AHotCornerBR|WorkspaceOpener|DoubleTap|FKeysInjector|WoWbar|IndivFacingEmailer
+Loop %NumUsers% 
+{
+Dropdown := Dropdown . "|" . User%A_Index%
+}
+StringReplace, Dropdown, Dropdown, |, , 
+Sort, Dropdown, D|
+StringSplit, User, Dropdown, |
+
+global TotalUsers := User0 ; Now determines number of users automatically
+
+Dropdown2 = Keystrokes|DateShortcut|SysSwitch|ExcelHLink|CalExtend|CopyAction|PasteAction|SuggestRemarks|ClientCodeIE|AttyFinder|EFSCertFinder|EFSFill|EFSLogin|AHotCornerBL|AHotCornerTR|AHotCornerBR|WorkspaceOpener|DoubleTap|FKeysInjector|WoWbar|IndivFacingEmailer|DocketShortcuts
 
 Gui, New, , Analytics
-Gui, Add, Tab3, w200 h370 +Center, Combined|Individual|Rankings;
+Gui, Add, Tab3, w200 h440 +Center, Combined|Individual|Rankings|
 Gui, Add, Button, x12  y29 w45 gCancel , Exit
 Gui, Add, Button, x61  y29 w45 gData   , Data
 Gui, Add, Button, x111 y29 w45 gArchive, Archive
 Gui, Add, Button, x160 y29 w45 gRefresh, Refresh
-Gui, Add, ListView, R37 Sort Grid x12 y53 w218 h320 vListViewCombined, Total Actions|Total Uses
+Gui, Add, ListView, R37 Sort Grid x12 y53 w218 h390 vListViewCombined, Total Actions|Total Uses
 Gui, Tab, 2
 Gui, Add, DropDownList, gIndivStats AltSubmit Center x13 y29 w133 vUserNumber, %Dropdown%  ; See Line 61 for details.
-Gui, Add, Button, x160 y29 w45 gHourly, Hourly
-Gui, Add, ListView, R37 Sort Grid x12 y53 w218 h320 vListViewIndiv, Action|Uses|Version
+;Gui, Add, Button, x160 y29 w45 gHourly, Hourly
+Gui, Add, Button, x160 y29 w45 gExport, Export
+Gui, Add, ListView, R37 Sort Grid x12 y53 w218 h390 vListViewIndiv, Action|Uses|Version
 Gui, Tab, 3
 Gui, Add, DropDownList, gRankings Center x13 y29 w133 vRankings, %Dropdown2%  ; See Line 61 for details.
-Gui, Add, ListView, R37 Sort Grid x12 y53 w218 h320 vListViewRank, User|Uses|`%|Version
-Gui, Show, w218 h380
+Gui, Add, ListView, R37 Sort Grid x12 y53 w218 h390 vListViewRank, User|Uses|`%|Version
+Gui, Add, Text, x152 y34 w50 Center vUserControl, %NumUsers% Users  ; See Line 61 for details.
+;%NumUsers%
+Gui, Show, w218 h450
 RefreshStats()
 return
 
@@ -110,8 +66,81 @@ Gui, 2:Show, w218 h380
 return
 
 Export:
-MsgBox, Not implemented yet...
+Gui, Submit, NoHide
+NewFile := ""
+InputBox, WhichList, Which list do you want to export?, 1 for Combined`, 2 for Individual`, 3 for Rankings, , 306, 130 , , , , , 1
+
+if (WhichList == "1")
+	Gui, ListView, ListViewCombined
+else if (WhichList == "2")
+	Gui, ListView, ListViewIndiv
+else if (WhichList == "3")
+	Gui, ListView, ListViewRank
+	
+Loop % LV_GetCount()
+	{
+	LV_GetText(Var1, A_Index , 1)
+	LV_GetText(Var2, A_Index , 2)
+	LV_GetText(Var3, A_Index , 3)
+	LV_GetText(Var4, A_Index , 4)	
+
+	if (WhichList == "1")
+		{
+		if (NewFile == "")
+			{
+			LV_GetText(Header1, 0 , 1)
+			LV_GetText(Header2, 0 , 2)
+			NewFile := Header1 "`t" Header2
+			}
+		NewVar := Var1 "`t" Var2
+		}
+	else if (WhichList == "2")
+		{
+		if (NewFile == "")
+			{
+			LV_GetText(Header1, 0 , 1)
+			LV_GetText(Header2, 0 , 2)
+			NewFile := User%UserNumber% "`t" Header2
+			}
+		NewVar := Var1 "`t" Var2
+		}
+	else if (WhichList == "3")
+		{
+		LV_GetText(CheckEmpty, 1 , 2)
+
+		if (NewFile == "")
+			{
+			LV_GetText(Header1, 0 , 1)
+			LV_GetText(Header2, 0 , 2)
+			LV_GetText(Header3, 0 , 3)
+			LV_GetText(Header4, 0 , 4)
+			
+			if (CheckEmpty == "")
+				NewFile := Header1 "`t" Header4
+			else
+				NewFile := Header1 "`t" Header2 "`t" Header3 "`t" Header4
+			}
+			
+		if (CheckEmpty == "")
+			NewVar := Var1 "`t" Var4
+		else
+			NewVar := Var1 "`t" Var2 "`t" Var3 "`t" Var4		
+		}
+		NewFile := NewFile "`r`n" NewVar		
+	}
+
+Clipboard := NewFile	
+MsgBox, 0, Stats copied to Clipboard., Go ahead and paste somewhere.
+Header1 := ""
+Header2 := ""
+Header3 := ""
+Header4 := ""
+CheckEmpty := ""
 return
+
+
+
+
 
 RefreshH:
 Refresh3:
@@ -230,6 +259,8 @@ return
 
 RefreshStats()
 {
+GuiControl, , Static1, % "0 / " NumUsers
+
 global KeystrokesTotals     = 0
 global DateShortcutTotals   = 0
 global SysSwitchTotals      = 0
@@ -251,6 +282,7 @@ global DoubleTapTotals = 0
 global FKeysInjectorTotals = 0
 global WoWbarTotals = 0
 global IndivFacingEmailerTotals = 0
+global DocketShortcutsTotals = 0
 
 gosub UserData
 Loop, %TotalUsers%
@@ -277,6 +309,7 @@ DoubleTapTotals+=DoubleTap%A_Index%
 FKeysInjectorTotals+=FKeysInjector%A_Index%
 WoWbarTotals+=WoWbar%A_Index%
 IndivFacingEmailerTotals+=IndivFacingEmailer%A_Index%
+DocketShortcutsTotals += DocketShortcuts%A_Index%
 
 }
 IniWrite, %KeystrokesTotals%,         C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupKeystrokes
@@ -300,6 +333,7 @@ IniWrite, %DoubleTapTotals%,          C:\Users\%A_Username%\Desktop\Stats2.ini, 
 IniWrite, %FKeysInjectorTotals%,      C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupFKeysInjectorTotals
 IniWrite, %WoWbarTotals%,             C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupWoWbarTotals
 IniWrite, %IndivFacingEmailerTotals%, C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupIndivFacingEmailerTotals
+IniWrite, %DocketShortcutsTotals%, 	  C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupDocketShortcutsTotals
 
 Sleep 200
 gosub CombinedStats
@@ -331,6 +365,7 @@ IniRead, DoubleTapTotals,          C:\Users\%A_Username%\Desktop\Stats2.ini, Tot
 IniRead, FKeysInjectorTotals,      C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupFKeysInjectorTotals
 IniRead, WoWbarTotals,             C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupWoWbarTotals
 IniRead, IndivFacingEmailerTotals, C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupIndivFacingEmailerTotals
+IniRead, DocketShortcutsTotals,    C:\Users\%A_Username%\Desktop\Stats2.ini, Totals, GroupDocketShortcutsTotals
 
 Gui, ListView, ListViewCombined
 LV_Delete()
@@ -355,6 +390,7 @@ LV_Add( ,"Total DoubleTap", DoubleTapTotals )
 LV_Add( ,"Total FKeysInjector", FKeysInjectorTotals )
 LV_Add( ,"Total WoWbar", WoWbarTotals )
 LV_Add( ,"Total IndivFacingEmailer", IndivFacingEmailerTotals )
+LV_Add( ,"Total DocketShortcuts", DocketShortcutsTotals )
 LV_ModifyCol()
 LV_ModifyCol(2, "Integer")
 LV_ModifyCol(2, "SortDesc")
@@ -411,6 +447,8 @@ LV_Add( ,"DoubleTap", DoubleTap%UserNumber% )
 LV_Add( ,"FKeysInjector", FKeysInjector%UserNumber% )
 LV_Add( ,"WoWbar", WoWbar%UserNumber% )
 LV_Add( ,"IndivFacingEmailer", IndivFacingEmailer%UserNumber% )
+LV_Add( ,"DocketShortcuts", DocketShortcuts%UserNumber% )
+
 LV_ModifyCol()
 LV_ModifyCol(2, "Integer")
 LV_ModifyCol(2, "SortDesc")
@@ -528,32 +566,36 @@ LV_ModifyCol(3, "Integer")
 return
 
 Archive:
-FileCreateDir, C:\Users\%A_Username%\Desktop\AHK Back-up\                                             ;Creates new folder on the desktop.
+FileCreateDir, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"
+FileCreateDir, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\Diagnostics\"                              ;Creates new folder on the desktop.
 Sleep 5000
-FileCopy, C:\Users\%A_Username%\Desktop\*.ahk, C:\Users\%A_Username%\Desktop\AHK Back-up              ;Copies all .ahk files from the Desktop.
+FileCopy, C:\Users\%A_Username%\Desktop\*.ahk, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"             ;Copies all .ahk files from the Desktop.
 Sleep 1000
-FileCopy, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\*.ini, C:\Users\%A_Username%\Desktop\AHK Back-up ; Copies all user .ini files from H: drive
+FileCopy, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\*.ini, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\" ; Copies all user .ini files from H: drive
 Sleep 1000
-FileCopy, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\*.png, C:\Users\%A_Username%\Desktop\AHK Back-up ; Copies all HelpImages .png files from H: drive
+FileCopy, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\HelpImages\*.png, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\" ; Copies all HelpImages .png files from H: drive
 Sleep 1000
-FileCopy, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\*.ini, C:\Users\%A_Username%\Desktop\AHK Back-up ; Copies all function .ini files from H: drive
+FileCopy, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\*.ini, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\" ; Copies all function .ini files from H: drive
 Sleep 1000
-FileCopy, H:\Docketing\AutoHotKey\Scripts\*.ahk, C:\Users\%A_Username%\Desktop\AHK Back-up    ; Grabs public AHK scripts
+FileCopy, H:\Docketing\AutoHotKey\Scripts\*.ahk, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"   ; Grabs public AHK scripts
 Sleep 1000
-FileCopy, H:\Docketing\AutoHotKey\AHK Instructions.docx, C:\Users\%A_Username%\Desktop\AHK Back-up    ; Copies the current AHK Instructions.docx.
+FileCopy, H:\Docketing\AutoHotKey\AHK Instructions.docx, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"   ; Copies the current AHK Instructions.docx.
 Sleep 1000
-FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\AHK Masters\*.ahk, C:\Users\%A_Username%\Desktop\AHK Back-up  ; Copies all current Master .ahk files.
+FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\AHK Masters\*.ahk, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\" ; Copies all current Master .ahk files.
 Sleep 1000
-FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\AHK Masters\Atty Phone Numbers.xlsx, C:\Users\%A_Username%\Desktop\AHK Back-up  ; Copies Atty Phone Number.xlsx.
+FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\AHK Masters\Atty Phone Numbers.xlsx, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"  ; Copies Atty Phone Number.xlsx.
 Sleep 1000
-FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\Sorta Dead AHK Scripts, C:\Users\%A_Username%\Desktop\AHK Back-up  ; Copies Sorta Dead AHK Scripts
+FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\Sorta Dead AHK Scripts, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"  ; Copies Sorta Dead AHK Scripts
 Sleep 1000
-FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\AHK Games, C:\Users\%A_Username%\Desktop\AHK Back-up  ; Copies AHK Games
+FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\AHK Games, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"  ; Copies AHK Games
 Sleep 1000
-FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\Pending AHK Scripts, C:\Users\%A_Username%\Desktop\AHK Back-up  ; Copies Pending AHK Scripts
+FileCopy, C:\Users\%A_Username%\Desktop\OLD_Desktop_Files\Pending AHK Scripts, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"  ; Copies Pending AHK Scripts
 Sleep 1000
-
-
+FileCopy, C:\Users\%A_Username%\Desktop\In Progress AHK Scripts, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\" 
+Sleep 1000
+FileCopy, C:\Users\%A_Username%\Desktop\Inactive AHK Scripts, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\"  
+Sleep 1000
+FileCopy, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\Diagnostics\*.ini, % "C:\Users\" A_Username "\Desktop\AHK Back-up - " Today "\Diagnostics\"
 return
 
 Data:
@@ -575,6 +617,7 @@ return
 UserData:
 Loop %TotalUsers%
 {
+GuiControl, , Static1, % A_Index " / " NumUsers
 IniRead, Keystrokes%A_Index%,         % "H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\" User%A_Index% ".ini", Achievements, Keystrokes
 IniRead, DateShortcut%A_Index%,       % "H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\" User%A_Index% ".ini", Achievements, DateShortcut
 IniRead, AttyFinder%A_Index%,         % "H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\" User%A_Index% ".ini", Achievements, AttyFinder
@@ -597,6 +640,9 @@ IniRead, DoubleTap%A_Index%,          % "H:\Docketing\AutoHotKey\.ini Files - DO
 IniRead, FKeysInjector%A_Index%,      % "H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\" User%A_Index% ".ini", Achievements, FKeysInjector
 IniRead, WoWbar%A_Index%,             % "H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\" User%A_Index% ".ini", Achievements, WoWbar
 IniRead, IndivFacingEmailer%A_Index%, % "H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\" User%A_Index% ".ini", Achievements, IndivFacingEmailer
+IniRead, DocketShortcuts%A_Index%,    % "H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\" User%A_Index% ".ini", Achievements, CustomDocketingShortcuts
+
+
 
 if Keystrokes%A_Index% = ERROR
 	Keystrokes%A_Index% = 0
@@ -640,8 +686,11 @@ if WoWbar%A_Index% = ERROR
 	WoWbar%A_Index% = 0
 if IndivFacingEmailer%A_Index% = ERROR
 	IndivFacingEmailer%A_Index% = 0
+if DocketShortcuts%A_Index% = ERROR
+	DocketShortcuts%A_Index% = 0
 
 }
+GuiControl, , Static1, %NumUsers% Users
 return
 
 ^j::                                             ; This grabs all filenames from a folder and adds any with .ini extension to Stats.ini.

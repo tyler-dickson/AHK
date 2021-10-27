@@ -28,6 +28,19 @@ if Computername = nick.lamb
 	goto OpenGUI
 if Computername = long.dang
 	goto OpenGUI
+if Computername = jason.finn
+	goto OpenGUI	
+if Computername = lara.hamdan
+	goto OpenGUI	
+if Computername = xiomara.raymundo
+	goto OpenGUI	
+if Computername = nathalie.driggers
+	goto OpenGUI
+if Computername = neysa.cabudol
+	goto OpenGUI
+if Computername = diana.cruz
+	goto OpenGUI	
+	
 	
 formattime, Today, , yyyy-MM-dd	
 IniRead, TodaysPerson, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\EP Validation.ini, Schedule, %Today%
@@ -41,7 +54,7 @@ if (TodaysPerson = ComputerName)
 	}
 else
 	{
-	TrayTip, Access denied., `nYou aren't scheduled to use the Bibliographic Data Duplicator today.`n`nContact Kristin if this is incorrect.
+	TrayTip, Access denied., `nYou aren't scheduled to use the Bibliographic Data Duplicator today.`n`nContact Kristin or Tyler if this is incorrect.
 	Sleep 4000
 	TrayTip
 	ExitApp
@@ -161,16 +174,18 @@ StringReplace, SecondPart2, SecondPart2, EP, %Country%, All,
 Sleep 200
 NewClientCode := SecondPart1 "." SecondPart2
 Sleep 200
+;MsgBox, %ClientCode% %Country% %CaseType% %PCTNumber% %NewClientCode%
 	ifinstring, Country, EP
 		{
-		MsgBox, 0, You're on an EP record!, You're supposed to use this on your Validated state records, not the EP record!`n`nCheck the record you're on and try again!
+		MsgBox, 0, You're on an EP record!, You're supposed to use this on your Validated state records, not the EP record!`nCheck the record you're on and try again!
 		return
 		}
 	ifinstring, CaseType, EDV
 		{
 		ie.document.getElementByID("fldstrCaseNumber_TextBox").Value := NewClientCode
+		ie.document.getElementByID("fldstrApplicationStatus_TextBox").Value := "Val Pend"
 		ie.document.getElementById("btnEdit").Click()
-		TrayTip, Client Code Updated., The Client Code should now have %Country% instead of EP.`n`nThe Case Type is still EDV.
+		TrayTip, Client Code Updated., The Client Code should now have %Country% instead of EP.`nThe Case Type is still EDV.
 		Sleep 2500
 		TrayTip
 		}
@@ -179,16 +194,18 @@ Sleep 200
 		CaseType := "EPP"
 		ie.document.getElementByID("fldstrCaseType_TextBox").Value := CaseType 
 		ie.document.getElementByID("fldstrCaseNumber_TextBox").Value := NewClientCode
+		ie.document.getElementByID("fldstrApplicationStatus_TextBox").Value := "Val Pend"
 		ie.document.getElementById("btnEdit").Click()
-		TrayTip, Client Code Updated., The Client Code should now have %Country% instead of EP.`n`nThe Case Type has been updated to EPP.
+		TrayTip, Client Code Updated., The Client Code should now have %Country% instead of EP.`nThe Case Type has been updated to EPP.
 		Sleep 2500
 		TrayTip
 		}
 	else ifinstring, PCTNumber, % " " ,
 		{
 		ie.document.getElementByID("fldstrCaseNumber_TextBox").Value := NewClientCode
+		ie.document.getElementByID("fldstrApplicationStatus_TextBox").Value := "Val Pend"
 		ie.document.getElementById("btnEdit").Click()
-		TrayTip, Client Code Updated., The Client Code should now have %Country% instead of EP.`n`nWas this an NPhase based on a PCT filing?`nIt wouldn't hurt to check`, just in case.
+		TrayTip, Client Code Updated., The Client Code should now have %Country% instead of EP.`nWas this an NPhase based on a PCT filing?`nIt wouldn't hurt to check`, just in case.
 		Sleep 4000
 		TrayTip
 		}
@@ -295,6 +312,285 @@ FrontString = ;
 return
 }
 
+
+#v::
+ie := ""
+ie := WBGet()
+while ie.busy or ie.ReadyState != 4 ;Wait for page to load
+	Sleep, 100
+ClientCode := ie.document.getElementByID("fldstrCaseNumber_TextBox").Value
+Country :=  ie.document.getElementByID("fldstrCountry_TextBox").Value
+AppNumber :=  ie.document.getElementByID("fldstrAppNumber").Value
+	StringReplace, AppNumber, AppNumber, EP, , 
+PubNumber := ie.document.getElementByID("fldstrPubNumber").Value
+EPAppNumber := "EP" . AppNumber
+StringLeft, FirstEight, AppNumber, 8
+EPFirstEight := "EP" . FirstEight
+EPPubNumber := "EP" . PubNumber
+Sleep 500
+if Country = AT
+	{
+	OutputVar := "http://seeip.patentamt.at/EPatentSuche/EPRegister/" PubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = CZ
+	{
+	OutputVar := "http://isdv.upv.cz/portal/pls/portal/portlets.pta.det?pskup=5&pciod=" PubNumber "&plang=en"
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = LT
+	{
+	OutputVar := "http://www.vpb.lt/db_eu_patentai/rezult-singl.php?db=vpb_europat&extidpatent=" PubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = RO
+	{
+	OutputVar := "http://rnb.osim.ro/?pn=" PubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = SI
+	{
+	OutputVar := "http://www2.uil-sipo.si/ds1.htm?A=107100&Q=PN%3D" PubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = SK
+	{
+	OutputVar := "http://www.upv.sk/patentView/?id=" PubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = BE
+	{
+	OutputVar := "http://bpp.economie.fgov.be/fo-eregister-view/application?lng=fr&number=" EPPubNumber "&table=EInvention"
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = CH
+	{
+	OutputVar := "https://www.swissreg.ch/srclient/en/pat/" EPPubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = FR
+	{
+	OutputVar := "http://bases-brevets.inpi.fr/en/document-en/" EPPubNumber ".html"	
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+if Country = GB
+	{
+	OutputVar := "http://www.ipo.gov.uk/p-ipsum/Case/PublicationNumber/" EPPubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = GR
+	{
+	OutputVar := "http://www.obi.gr/dl/emtservice/regviewer_pn?pn=" EPPubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+if Country = IS
+	{
+	OutputVar := "http://els.is/einkaleyfi/leit-i-gagnabonkum?application-number=" EPPubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+if Country = IT
+	{
+	OutputVar := "http://www.uibm.gov.it/uibm/dati/Tmview.aspx?load=espacenet&PubblicationNumber=" EPPubNumber "&table=EInvention"	
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = LU
+	{
+	OutputVar := "http://patent.public.lu/fo-eregister-view/application?lng=en&number=" EPPubNumber	
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+if Country = NL
+	{
+	OutputVar := "http://mijnoctrooi.rvo.nl/fo-eregister-view/application?lng=en&number=" EPPubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = PT
+	{
+	OutputVar := "http://servicosonline.inpi.pt/pesquisas/main/patentesdirecto.jsp?lang=en&fpubnumber=" EPPubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if Country = TR
+	{
+	OutputVar := "http://online.turkpatent.gov.tr/EPATENT/epo_search.jsp?param=" EPPubNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+if Country = SE
+	{
+	OutputVar := "http://was.prv.se/spd/ep/an/" FirstEight	
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+if Country = BG
+	{
+	OutputVar := "https://portal.bpo.bg/en/rd?epo_key=" EPFirstEight
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+if Country = PL
+	{
+	OutputVar := "http://regserv.uprp.pl/register/application?number=" EPFirstEight "&lng=en"	
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}		
+if Country = ES
+	{
+	EFirstEight := "E" . FirstEight
+	OutputVar := "http://sitadex.oepm.es/SitadexWS/index.jsp?numExp=" EFirstEight ; E04753697
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}		
+if Country = HU
+	{
+	EFirstEight := "E" . FirstEight
+	OutputVar := "http://epub.hpo.hu/e-kutatas/index.html?lang=en&service=ADATLAP&appId=" EFirstEight	
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}		
+if Country = DK
+	{
+	OutputVar := "http://onlineweb.dkpto.dk/pvsonline/Patent?action=102&language=gb&sagID=" AppNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+if Country = IE
+	{
+	OutputVar := "https://eregister.patentsoffice.ie/register/PTRegister.aspx?idappli=" AppNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}		
+if Country = EE
+	{
+	OutputVar := "http://www1.epa.ee/ep/data.asp?NroParam=" EPAppNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}		
+if Country = FI
+	{
+	OutputVar := "http://patent.prh.fi/FiEp/tiedot.asp?NroParam=" EPAppNumber
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}		
+if Country = DE
+	{
+	EAppNumber := "E" . AppNumber
+	StringReplace, ENoPeriod, EAppNumber, ., , 
+	OutputVar := "http://register.dpma.de/DPMAregister/pat/register?lang=en&AKZ=" ENoPeriod ; E047536974 
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+	
+if Country = CY
+	gosub NoWebsite
+if Country = LI
+	gosub NoWebsite
+if Country = LV
+	gosub NoWebsite
+if Country = AL
+	gosub NoWebsite	
+if Country = BA
+	gosub NoWebsite	
+if Country = HR
+	gosub NoWebsite
+if Country = ME
+	gosub NoWebsite
+if Country = MK
+	gosub NoWebsite
+if Country = MT
+	gosub NoWebsite
+if Country = RS
+	gosub NoWebsite
+if Country = SM
+	gosub NoWebsite
+	
+if Country = EP
+	{
+	Gui, New, , Where on the EPO website do you want to go?
+	Gui, Add, Button, gOption1, About This File
+	Gui, Add, Button, gOption1, Federated Register	
+	Gui, Add, Button, gOption1, All Documents	
+	Gui, Show, NoActivate
+	Gui, Flash
+	return
+	}
+else
+	MsgBox, , Not on an EP or Validation record., You aren't on an EP or Validation record.`n`nCheck your Client Code and try again.
+return
+
+NoWebsite:
+MsgBox, , No website information., No website information available.`n`nKnow the right website? Let Tyler know.
+return
+
+Option1:
+Gui, Submit
+if A_GuiControl = About This File
+	{
+	OutputVar := "https://register.epo.org/application?number=" EPFirstEight "&lng=en&tab=main"
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if A_GuiControl = Federated Register
+	{
+	OutputVar := "https://register.epo.org/application?number=" EPFirstEight "&lng=en&tab=federated"
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}
+if A_GuiControl = All Documents
+	{
+	OutputVar := "https://register.epo.org/application?number=" EPFirstEight "&lng=en&tab=doclist"
+	params := [OutputVar, 65536]   ;32 
+	ie.Navigate(params*)
+	return
+	}	
+	
+;GuiClose:
+;ExitApp
+;return
+
 ;************Pointer to Open IE Window******************
 WBGet(WinTitle="ahk_class IEFrame", Svr#=1) {               ;// based on ComObjQuery docs
    static msg := DllCall("RegisterWindowMessage", "str", "WM_HTML_GETOBJECT")
@@ -316,8 +612,10 @@ Help(wParam, lParam, Msg) {
 MouseGetPos,,,, OutputVarControl
 IfEqual, OutputVarControl, Button2
 	Help := "This will store the current Bibliographic Information and open Audit Trail."
+	
 else IfEqual, OutputVarControl, Button3
 	Help := "This will inject your stored Bibliographic Information into Audit Trail."
+	
 else IfEqual, OutputVarControl, Button5
 	Help := "This will replace EP in the Client Code with the new country."
 
@@ -339,10 +637,8 @@ else IfEqual, OutputVarControl, Button11
 else IfEqual, OutputVarControl, Button12
 	Help := "This copies the Invention Screen, and then updates the Country to CH."
 
-
 else IfEqual, OutputVarControl, Button13
 	Help := "This copies the Invention Screen, and then updates the Country to CY."
-
 
 else IfEqual, OutputVarControl, Button14
 	Help := "This copies the Invention Screen, and then updates the Country to CZ."
@@ -368,37 +664,26 @@ else IfEqual, OutputVarControl, Button20
 else IfEqual, OutputVarControl, Button21
 	Help := "This copies the Invention Screen, and then updates the Country to GB."
 
-
 else IfEqual, OutputVarControl, Button22
 	Help := "This copies the Invention Screen, and then updates the Country to GR."
-
-
 
 else IfEqual, OutputVarControl, Button23
 	Help := "This copies the Invention Screen, and then updates the Country to HR."
 
-
-
 else IfEqual, OutputVarControl, Button24
 	Help := "This copies the Invention Screen, and then updates the Country to HU."
-
-
 
 else IfEqual, OutputVarControl, Button25
 	Help := "This copies the Invention Screen, and then updates the Country to IE."
 
-
 else IfEqual, OutputVarControl, Button26
 	Help := "This copies the Invention Screen, and then updates the Country to IS."	
-	
-	
+		
 else IfEqual, OutputVarControl, Button27
 	Help := "This copies the Invention Screen, and then updates the Country to IT."
 
-
 else IfEqual, OutputVarControl, Button28
 	Help := "This copies the Invention Screen, and then updates the Country to LI."
-
 
 else IfEqual, OutputVarControl, Button29
 	Help := "This copies the Invention Screen, and then updates the Country to LT."
@@ -414,7 +699,6 @@ else IfEqual, OutputVarControl, Button32
 
 else IfEqual, OutputVarControl, Button33
 	Help := "This copies the Invention Screen, and then updates the Country to ME."
-
 
 else IfEqual, OutputVarControl, Button34
 	Help := "This copies the Invention Screen, and then updates the Country to MK."
@@ -433,7 +717,6 @@ else IfEqual, OutputVarControl, Button38
 
 else IfEqual, OutputVarControl, Button39
 	Help := "This copies the Invention Screen, and then updates the Country to PT."
-
 
 else IfEqual, OutputVarControl, Button40
 	Help := "This copies the Invention Screen, and then updates the Country to RO."	
@@ -459,6 +742,5 @@ else IfEqual, OutputVarControl, Button46
 SB_SetText(Help)
 }
 
-GuiClose:
-ExitApp
-return
+Escape::ExitApp
+

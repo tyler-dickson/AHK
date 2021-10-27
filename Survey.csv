@@ -1,0 +1,28 @@
+Row,Client Code,System,Action Type,Base Date,Time,Username
+1,CHIHO.043CA,Agent,,,14-Aug-2019 16:23:07,Tyler.Dickson
+2,CHIHO.043CA,Agent,,,14-Aug-2019 16:23:12,Tyler.Dickson
+3,CHIHO.043CA,Agent,INT-PAT STATUS CHECK,12-Aug-2019,14-Aug-2019 16:23:19,Tyler.Dickson
+4,CHIHO.043CA,Live,,,14-Aug-2019 16:23:25,Tyler.Dickson
+5,CHIHO.043CA,Live,INT-PAT STATUS CHECK,12-Aug-2019,14-Aug-2019 16:23:29,Tyler.Dickson
+6,CHIHO.043CA,Live,INT-PAT STATUS CHECK,12-Aug-2019,14-Aug-2019 16:23:32,Tyler.Dickson
+7,CHIHO.043CA,Live,INT-PAT STATUS CHECK,12-Aug-2019,14-Aug-2019 16:23:35,Tyler.Dickson
+8,CHIHO.043CA,Agent,,,14-Aug-2019 16:23:39,Tyler.Dickson
+9,CHIHO.043CA,Agent,INT-PAT STATUS CHECK,12-Aug-2019,14-Aug-2019 16:23:43,Tyler.Dickson
+10,CHIHO.043CA,Agent,INT-PAT STATUS CHECK,12-Aug-2019,14-Aug-2019 16:23:46,Tyler.Dickson
+11,CHIHO.043CA,Live,,,14-Aug-2019 16:23:51,Tyler.Dickson
+12,CHIHO.043CA,Live,,,14-Aug-2019 16:23:57,Tyler.Dickson
+13,,Live,,,14-Aug-2019 16:25:33,Tyler.Dickson
+14,DOCKETING.AHK,Live,,,14-Aug-2019 16:25:39,Tyler.Dickson
+15,DOCKETING.AHK,Live,Opposition Filed (12345),12-Jun-2012,14-Aug-2019 16:25:43,Tyler.Dickson
+16,DOCKETING.AHK,Live,,,14-Aug-2019 16:25:46,Tyler.Dickson
+17,DOCKETING.AHK,Live,,,14-Aug-2019 16:26:31,Tyler.Dickson
+18,DOCKETING.AHK,Live,,,14-Aug-2019 16:26:42,Tyler.Dickson
+19,DOCKETING.AHK,Agent,,,14-Aug-2019 16:27:02,Tyler.Dickson
+20,DOCKETING.AHK,Agent,,,14-Aug-2019 16:27:47,Tyler.Dickson
+21,DOCKETING.AHK,Live,,,14-Aug-2019 16:27:51,Tyler.Dickson
+22,DOCKETING.AHK,Live,Opposition Filed (12345),12-Jun-2012,14-Aug-2019 16:27:55,Tyler.Dickson
+23,DOCKETING.AHK,Live,INT-PAT STATUS CHECK,12-Jun-2011,14-Aug-2019 16:28:03,Tyler.Dickson
+24,DOCKETING.AHK,Live,Opposition Filed (12345),12-Jun-2012,14-Aug-2019 16:28:06,Tyler.Dickson
+25,DOCKETING.AHK,Live,,,14-Aug-2019 16:28:10,Tyler.Dickson
+26,DOCKETING.AHK,Live,Opposition Filed (12345),12-Jun-2012,14-Aug-2019 16:28:15,Tyler.Dickson
+27,DOCKETING.AHK,Agent,,,14-Aug-2019 16:28:19,Tyler.Dickson

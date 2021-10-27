@@ -1,8 +1,10 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿; Created with AutoHotkey by Tyler Dickson. 
+
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-
+#SingleInstance Force
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                              ;;
 ;;            If you're here to fix your shortcuts,             ;;
@@ -23,6 +25,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 global Hotstring
 global Extended
+Menu, Tray, Icon, Shell32.dll, 138
 
 ^=::
 HotstringCreator()
@@ -42,7 +45,7 @@ Gui, New, +AlwaysOnTop, Create Shortcut
 Gui, Add, Text, w180 h50 +Center, Create a shortcut for longer text. `n (e.g. btw => by the way) `n`n Shortened version...
 Gui, Add, Edit, w180 h20 Limit +Center vHotstring,
 Gui, Add, Text, w180 h14 +Center,...will turn into...
-Gui, Add, Edit, w180 h20 Limit +Center vExtended,
+Gui, Add, Edit, w180 h20 +Center vExtended,
 Gui, Add, Button, x22 y140 w50 h30 Default gHotupdate , Update
 Gui, Add, Button, x130 y140 w50 h30 gHotcancel , Cancel
 Gui, Add, Button, x22 y190 w160 h30 +Center gHotFix , Need to delete a mistake?
@@ -74,7 +77,7 @@ return
 Hotupdate:
 {
 Gui, Submit
-MsgBox, New shortcut added!`n`nNote: This will remove your selections from the Update Information Tab.`n`nPress Control+CapsLock to re-enable your preferred options.
+MsgBox, New shortcut added!`n`nYour shortcut will be available for use immediately.
 FileAppend, ::%Hotstring%::%Extended%`n, C:\Users\%A_Username%\Desktop\Hotstrings.ahk
 Reload
 Sleep 500 ; If successful, the reload will close this instance during the Sleep, so the line below will never be reached.
@@ -134,10 +137,4 @@ Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ::btw::by the way
-
-::#ndd::No new dates docketed.
-
-::#pp::Previously processed.
-
-
 

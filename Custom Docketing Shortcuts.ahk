@@ -1,13 +1,12 @@
 ﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+;																																		return
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance, Force
 Enabled := ComObjError(false)
 Menu, Tray, Icon, pifmgr.dll, 2
 CoordMode, ToolTip 
-
-global isEditing = false
 
 global Computername
 StringSplit, FirstName, A_Username, . ,
@@ -119,13 +118,13 @@ return
 ClickEdit:
 ToolTip, , 
 ie := WBGet()
-	if isEditing = true
+Status := ie.document.getElementById("tdbtnSave").style.display
+	if Status = block
 		{
 		ie.document.getElementByID("btnSave").Click()
 		WinGetPos, mX, mY, mW, mH, A
 		ToolTip, Click Save Button, mX + mW/2, mY + mH/3, 
 		SetTimer, CloseToolTip, 2500
-		isEditing = false
 		}
 	else
 		{
@@ -133,7 +132,6 @@ ie := WBGet()
 		WinGetPos, mX, mY, mW, mH, A
 		ToolTip, Click Edit Button, mX + mW/2, mY + mH/3, 
 		SetTimer, CloseToolTip, 2500
-		isEditing = true
 		}
 IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
 Uses++
@@ -142,29 +140,38 @@ return
 
 ClickUndo:
 ToolTip, , 
-WinGetPos, mX, mY, mW, mH, A
-ToolTip, Click Undo Button, mX + mW/2, mY + mH/3, 
-SetTimer, CloseToolTip, 2500
 ie := WBGet()
-	if isEditing = true
-		ie.document.getElementByID("btnUndo").Click()
-isEditing = false
-IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
-Uses++
-IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
+Status := ie.document.getElementById("tdbtnUndo").style.display
+if Status != block
+	return
+else
+	{
+	WinGetPos, mX, mY, mW, mH, A
+	ToolTip, Click Undo Button, mX + mW/2, mY + mH/3, 
+	SetTimer, CloseToolTip, 2500
+	ie.document.getElementByID("btnUndo").Click()
+	IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
+	Uses++
+	IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
+	}
 return
 
 ClickCopy:
 ToolTip, , 
-WinGetPos, mX, mY, mW, mH, A
-ToolTip, Click Copy Button, mX + mW/2, mY + mH/3, 
-SetTimer, CloseToolTip, 2500
 ie := WBGet()
-ie.document.getElementByID("btnCopy").Click()
-isEditing = true
-IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
-Uses++
-IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
+Status := ie.document.getElementById("tdbtnSave").style.display
+if Status != none
+	return
+else
+	{
+	WinGetPos, mX, mY, mW, mH, A
+	ToolTip, Click Copy Button, mX + mW/2, mY + mH/3, 
+	SetTimer, CloseToolTip, 2500
+	ie.document.getElementByID("btnCopy").Click()
+	IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
+	Uses++
+	IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
+	}
 return
 
 ClickFirstRecord:
@@ -174,7 +181,6 @@ ToolTip, Click First Record, mX + mW/2, mY + mH/3,
 SetTimer, CloseToolTip, 2500
 ie := WBGet()
 ie.document.getElementByID("rsmMain_btnFirstRecord").Click()
-isEditing = false
 IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
 Uses++
 IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
@@ -187,7 +193,6 @@ ToolTip, Click Last Record, mX + mW/2, mY + mH/3,
 SetTimer, CloseToolTip, 2500
 ie := WBGet()
 ie.document.getElementByID("rsmMain_btnLastRecord").Click()
-isEditing = false
 IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
 Uses++
 IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
@@ -200,7 +205,6 @@ ToolTip, Click Previous Record, mX + mW/2, mY + mH/3,
 SetTimer, CloseToolTip, 2500
 ie := WBGet()
 ie.document.getElementByID("rsmMain_btnPreviousRecord").Click()
-isEditing = false
 IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
 Uses++
 IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
@@ -213,7 +217,6 @@ ToolTip, Click Next Record, mX + mW/2, mY + mH/3,
 SetTimer, CloseToolTip, 2500
 ie := WBGet()
 ie.document.getElementByID("rsmMain_btnNextRecord").Click()
-isEditing = false
 IniRead, Uses, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
 Uses++
 IniWrite, %Uses%, H:\Docketing\AutoHotKey\.ini Files - DO NOT TOUCH!\ImageSearch\%Computername%.ini, Achievements, CustomDocketingShortcuts
